@@ -59,6 +59,10 @@ export function formatPercent(rate: number, opts: FormatOpts = {}): string {
   return bnNumerals ? toBnDigits(s) : s;
 }
 
+export function formatBdt(amount: number, lang: "en" | "bn" = "en"): string {
+  return formatBDT(amount, { locale: lang, bnNumerals: lang === "bn" });
+}
+
 export function formatNumber(n: number, opts: FormatOpts = {}): string {
   const s = groupBD(n).split(".")[0];
   return opts.bnNumerals ? toBnDigits(s) : s;

@@ -43,6 +43,7 @@ model Bank {
   fdrProducts     FdrProduct[]
   creditCards     CreditCard[]
   loans           LoanProduct[]
+  dpsProducts     DpsProduct[]
   rateChanges     RateChange[]
 
   @@index([category])
@@ -231,5 +232,104 @@ model LoanProduct {
   @@index([bankId])
   @@index([loanType])
   @@index([interestRateMin])
+}
+
+/// Deposit Pension Scheme (DPS) product
+model DpsProduct {
+  id                 String   @id @default(cuid())
+  slug               String   @unique
+  bankId             String
+  bank               Bank     @relation(fields: [bankId], references: [id], onDelete: Cascade)
+  name               String
+  nameBn             String
+  minMonthlyDeposit  Int      @default(500)
+  maxMonthlyDeposit  Int      @default(50000)
+  interestRate       Float
+  tenureYears        String   @default("1,2,3,5,7,10")
+  isShariah          Boolean  @default(false)
+  features           String   @default("[]")
+  featuresBn         String   @default("[]")
+  popularity         Int      @default(50)
+  isActive           Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([bankId])
+  @@index([interestRate])
+}
+
+/// Credit card B1G1 dining, hotel, travel, and shopping deals
+model CardDeal {
+  id                String    @id @default(cuid())
+  slug              String    @unique
+  title             String
+  titleBn           String
+  bankSlug          String
+  bankName          String
+  cardTier          String    @default("ALL")
+  category          String
+  merchantName      String
+  discountDetails   String
+  discountDetailsBn String
+  city              String    @default("DHAKA")
+  location          String?
+  validUntil        DateTime?
+  bannerBadge       String?
+  terms             String?
+  termsBn           String?
+  isActive          Boolean   @default(true)
+  popularity        Int       @default(50)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([bankSlug])
+  @@index([category])
+  @@index([city])
+}
+
+/// Customer application / pre-qualification lead capture
+model Lead {
+  id             String   @id @default(cuid())
+  refNumber      String   @unique
+  name           String
+  phone          String
+  email          String?
+  city           String
+  monthlyIncome  Int
+  employmentType String
+  productType    String
+  productSlug    String
+  productName    String
+  bankSlug       String
+  bankName       String
+  status         String   @default("PENDING")
+  notes          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([phone])
+  @@index([refNumber])
+  @@index([productType])
+}
+
+/// Bank branch 9-digit Routing Number & SWIFT directory
+model BankRouting {
+  id            String   @id @default(cuid())
+  bankSlug      String
+  bankName      String
+  bankNameBn    String
+  branchName    String
+  branchNameBn  String
+  district      String
+  districtBn    String
+  routingNumber String
+  swiftCode     String?
+  address       String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([bankSlug])
+  @@index([district])
+  @@index([routingNumber])
 }
 

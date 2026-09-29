@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { BankLogo } from "./BankLogo";
 import { Badge, Button } from "./ui";
+import { ApplyModal, type ApplyModalProduct } from "./ApplyModal";
 import type { CreditCardRow } from "@/lib/queries";
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
@@ -65,6 +66,7 @@ export function CardExplorer({ rows, t, locale, bnNumerals, initial }: Props) {
   const [compare, setCompare] = useState<string[]>([]);
   const [showCompare, setShowCompare] = useState(false);
   const [mobileFilters, setMobileFilters] = useState(false);
+  const [applyProduct, setApplyProduct] = useState<ApplyModalProduct | null>(null);
 
   const nf = { bnNumerals };
   const name = (r: CreditCardRow) => (locale === "bn" ? r.nameBn : r.name);
@@ -646,10 +648,22 @@ export function CardExplorer({ rows, t, locale, bnNumerals, initial }: Props) {
                       {isCompared ? (locale === "bn" ? "তুলনায় আছে" : "Comparing") : t.common.compare}
                     </button>
 
-                    <Button href={card.bank.website} external size="sm" variant="secondary">
+                    <button
+                      onClick={() =>
+                        setApplyProduct({
+                          name: card.name,
+                          nameBn: card.nameBn,
+                          bankName: card.bank.name,
+                          bankSlug: card.bank.slug,
+                          productType: "CARD",
+                          productSlug: card.slug,
+                        })
+                      }
+                      className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[12px] font-bold px-3 py-1.5 transition-colors shadow-xs"
+                    >
                       {t.common.apply}
                       <ExternalLink className="h-3 w-3" />
-                    </Button>
+                    </button>
                   </div>
                 </article>
               );
@@ -893,6 +907,10 @@ export function CardExplorer({ rows, t, locale, bnNumerals, initial }: Props) {
             </Button>
           </div>
         </div>
+      )}
+
+      {applyProduct && (
+        <ApplyModal product={applyProduct} onClose={() => setApplyProduct(null)} />
       )}
     </div>
   );

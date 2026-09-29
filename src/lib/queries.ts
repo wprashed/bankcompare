@@ -368,14 +368,134 @@ export async function getRateChanges(limit = 8): Promise<RateChangeRow[]> {
   }));
 }
 
+export type CardDealRow = {
+  id: string;
+  slug: string;
+  title: string;
+  titleBn: string;
+  bankSlug: string;
+  bankName: string;
+  cardTier: string;
+  category: string;
+  merchantName: string;
+  discountDetails: string;
+  discountDetailsBn: string;
+  city: string;
+  location: string | null;
+  bannerBadge: string | null;
+  terms: string | null;
+  termsBn: string | null;
+  popularity: number;
+};
+
+export type BankRoutingRow = {
+  id: string;
+  bankSlug: string;
+  bankName: string;
+  bankNameBn: string;
+  branchName: string;
+  branchNameBn: string;
+  district: string;
+  districtBn: string;
+  routingNumber: string;
+  swiftCode: string | null;
+  address: string | null;
+};
+
+export type DpsRow = {
+  id: string;
+  slug: string;
+  name: string;
+  nameBn: string;
+  minMonthlyDeposit: number;
+  maxMonthlyDeposit: number;
+  interestRate: number;
+  tenureYears: string;
+  isShariah: boolean;
+  features: string[];
+  featuresBn: string[];
+  popularity: number;
+  bank: BankLite;
+};
+
+export async function getCardDeals(): Promise<CardDealRow[]> {
+  const deals = await prisma.cardDeal.findMany({
+    where: { isActive: true },
+    orderBy: { popularity: "desc" },
+  });
+  return deals.map((d) => ({
+    id: d.id,
+    slug: d.slug,
+    title: d.title,
+    titleBn: d.titleBn,
+    bankSlug: d.bankSlug,
+    bankName: d.bankName,
+    cardTier: d.cardTier,
+    category: d.category,
+    merchantName: d.merchantName,
+    discountDetails: d.discountDetails,
+    discountDetailsBn: d.discountDetailsBn,
+    city: d.city,
+    location: d.location,
+    bannerBadge: d.bannerBadge,
+    terms: d.terms,
+    termsBn: d.termsBn,
+    popularity: d.popularity,
+  }));
+}
+
+export async function getBankRoutings(): Promise<BankRoutingRow[]> {
+  const routings = await prisma.bankRouting.findMany({
+    orderBy: [{ bankName: "asc" }, { branchName: "asc" }],
+  });
+  return routings.map((r) => ({
+    id: r.id,
+    bankSlug: r.bankSlug,
+    bankName: r.bankName,
+    bankNameBn: r.bankNameBn,
+    branchName: r.branchName,
+    branchNameBn: r.branchNameBn,
+    district: r.district,
+    districtBn: r.districtBn,
+    routingNumber: r.routingNumber,
+    swiftCode: r.swiftCode,
+    address: r.address,
+  }));
+}
+
+export async function getDpsProducts(): Promise<DpsRow[]> {
+  const dpsList = await prisma.dpsProduct.findMany({
+    where: { isActive: true },
+    include: { bank: { select: bankSelect } },
+    orderBy: { interestRate: "desc" },
+  });
+  return dpsList.map((d) => ({
+    id: d.id,
+    slug: d.slug,
+    name: d.name,
+    nameBn: d.nameBn,
+    minMonthlyDeposit: d.minMonthlyDeposit,
+    maxMonthlyDeposit: d.maxMonthlyDeposit,
+    interestRate: d.interestRate,
+    tenureYears: d.tenureYears,
+    isShariah: d.isShariah,
+    features: parseJson(d.features),
+    featuresBn: parseJson(d.featuresBn),
+    popularity: d.popularity,
+    bank: d.bank,
+  }));
+}
+
 export async function getStats() {
-  const [banks, savings, fdr, slabs, cards, loans, topFdr, topSavings, minLoan] = await Promise.all([
+  const [banks, savings, fdr, slabs, cards, loans, dps, deals, topFdr, topSavings, minLoan] = await Promise.all([
     prisma.bank.count(),
     prisma.savingsAccount.count(),
     prisma.fdrProduct.count(),
     prisma.fdrRate.count(),
     prisma.creditCard.count(),
     prisma.loanProduct.count(),
+    prisma.dpsProduct.count(),
+    prisma.cardDeal.count(),
     prisma.fdrRate.aggregate({ _max: { rate: true } }),
     prisma.savingsAccount.aggregate({ _max: { interestRateMax: true } }),
     prisma.loanProduct.aggregate({ _min: { interestRateMin: true } }),
@@ -387,7 +507,9 @@ export async function getStats() {
     slabs,
     cards,
     loans,
-    products: savings + fdr + cards + loans,
+    dps,
+    deals,
+    products: savings + fdr + cards + loans + dps,
     maxFdrRate: topFdr._max.rate ?? 0,
     maxSavingsRate: topSavings._max.interestRateMax ?? 0,
     minLoanRate: minLoan._min.interestRateMin ?? 9.5,

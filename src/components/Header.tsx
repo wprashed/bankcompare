@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Menu, X, ChevronDown, Calculator, PiggyBank, Landmark, LineChart, CreditCard, Banknote } from "lucide-react";
+import { Menu, X, ChevronDown, Calculator, PiggyBank, Landmark, LineChart, CreditCard, Banknote, Sparkles } from "lucide-react";
 import { LanguageToggle } from "./LanguageToggle";
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
@@ -30,13 +30,17 @@ export function Header({
     { href: "/savings", label: t.nav.savings, icon: PiggyBank },
     { href: "/fdr", label: t.nav.fdr, icon: LineChart },
     { href: "/cards", label: t.nav.cards, icon: CreditCard },
+    { href: "/deals", label: locale === "bn" ? "অফার ও ডাইনিং" : "Deals & B1G1", icon: Sparkles },
     { href: "/loans", label: t.nav.loans, icon: Banknote },
     { href: "/banks", label: t.nav.banks, icon: Landmark },
   ];
   const calcLinks = [
     { href: "/calculators/fdr", label: t.nav.fdrCalculator },
+    { href: "/calculators/dps", label: locale === "bn" ? "ডিপিএস ক্যালকুলেটর" : "DPS Calculator" },
     { href: "/calculators/emi", label: t.nav.emiCalculator },
     { href: "/calculators/credit-card", label: t.nav.creditCalculator },
+    { href: "/cards/matcher", label: locale === "bn" ? "কার্ড ম্যাচ কুইজ" : "Card Matcher Quiz" },
+    { href: "/routing-numbers", label: locale === "bn" ? "রাউটিং নম্বর ডিরেক্টরি" : "Routing Numbers" },
   ];
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");

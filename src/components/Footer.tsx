@@ -5,6 +5,7 @@ import type { Dictionary } from "@/lib/i18n/dictionaries";
 
 export function Footer({ t, verifiedLabel }: { t: Dictionary; verifiedLabel: string }) {
   const year = new Date().getFullYear();
+  const isBn = t.nav.savings.includes("সঞ্চয়ী");
   return (
     <footer className="no-print mt-20 border-t border-ink-200 bg-ink-50/60">
       <Container className="py-12">
@@ -29,6 +30,7 @@ export function Footer({ t, verifiedLabel }: { t: Dictionary; verifiedLabel: str
               { href: "/savings", label: t.nav.savings },
               { href: "/fdr", label: t.nav.fdr },
               { href: "/cards", label: t.nav.cards },
+              { href: "/deals", label: isBn ? "কার্ড অফার ও বুফে" : "Deals & B1G1" },
               { href: "/loans", label: t.nav.loans },
               { href: "/banks", label: t.nav.banks },
             ]}
@@ -37,8 +39,11 @@ export function Footer({ t, verifiedLabel }: { t: Dictionary; verifiedLabel: str
             title={t.footer.tools}
             links={[
               { href: "/calculators/fdr", label: t.nav.fdrCalculator },
+              { href: "/calculators/dps", label: isBn ? "ডিপিএস ক্যালকুলেটর" : "DPS Calculator" },
               { href: "/calculators/emi", label: t.nav.emiCalculator },
               { href: "/calculators/credit-card", label: t.nav.creditCalculator },
+              { href: "/cards/matcher", label: isBn ? "কার্ড ম্যাচ কুইজ" : "Card Matcher Quiz" },
+              { href: "/routing-numbers", label: isBn ? "রাউটিং নম্বর ডিরেক্টরি" : "Routing Numbers" },
             ]}
           />
           <FooterCol

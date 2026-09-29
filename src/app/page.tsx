@@ -14,6 +14,7 @@ import {
   Shield,
   Star,
   TrendingUp,
+  Sparkles,
 } from "lucide-react";
 import { Badge, Button, Container, SectionHeading, Stat } from "@/components/ui";
 import { BankLogo } from "@/components/BankLogo";
@@ -142,8 +143,10 @@ export default async function HomePage() {
                     { href: "/savings", icon: PiggyBank, label: t.nav.savings, meta: `${formatNumber(stats.savings, nf)} ${t.common.products}`, rate: formatPercent(stats.maxSavingsRate, nf) },
                     { href: "/fdr", icon: LineChart, label: t.nav.fdr, meta: `${formatNumber(stats.slabs, nf)} ${t.home.statRates.toLowerCase()}`, rate: formatPercent(stats.maxFdrRate, nf) },
                     { href: "/cards", icon: CreditCard, label: t.nav.cards, meta: `${formatNumber(stats.cards, nf)} ${t.common.products}`, rate: "0% EMI" },
+                    { href: "/deals", icon: Sparkles, label: locale === "bn" ? "কার্ড ডিলস ও বুফে" : "Deals & B1G1 Buffets", meta: "Westin, Le Méridien, Radisson", rate: "B1G1" },
                     { href: "/loans", icon: Banknote, label: t.nav.loans, meta: `${formatNumber(stats.loans, nf)} ${t.common.products}`, rate: `${t.common.from} ${formatPercent(stats.minLoanRate, nf)}` },
-                    { href: "/calculators/credit-card", icon: Calculator, label: t.creditCalc.tabEligibility, meta: t.nav.creditCalculator, rate: "" },
+                    { href: "/calculators/dps", icon: LineChart, label: locale === "bn" ? "ডিপিএস ক্যালকুলেটর" : "DPS Calculator", meta: "After-Tax Payout", rate: "9.75%" },
+                    { href: "/cards/matcher", icon: Sparkles, label: locale === "bn" ? "কার্ড ম্যাচ কুইজ" : "Card Matcher Quiz", meta: "Find your card in 60s", rate: "Quiz" },
                   ].map((item) => (
                     <Link
                       key={item.href}

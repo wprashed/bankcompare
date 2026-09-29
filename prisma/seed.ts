@@ -7,6 +7,11 @@
  */
 import { PrismaClient } from "@prisma/client";
 import { CREDIT_CARDS_DATA, LOANS_DATA } from "./creditSeed";
+import { EXTENDED_BANKS } from "./extendedBanks";
+import { EXTENDED_CREDIT_CARDS } from "./extendedCreditCards";
+import { CARD_DEALS_DATA } from "./dealsSeed";
+import { DPS_PRODUCTS_DATA } from "./dpsSeed";
+import { ROUTING_NUMBERS_DATA } from "./routingSeed";
 
 const prisma = new PrismaClient();
 
@@ -1057,9 +1062,15 @@ async function main() {
   await prisma.savingsAccount.deleteMany();
   await prisma.creditCard.deleteMany();
   await prisma.loanProduct.deleteMany();
+  await prisma.dpsProduct.deleteMany();
+  await prisma.cardDeal.deleteMany();
+  await prisma.bankRouting.deleteMany();
+  await prisma.lead.deleteMany();
   await prisma.bank.deleteMany();
 
-  for (const b of BANKS) {
+  const ALL_BANKS = [...BANKS, ...EXTENDED_BANKS];
+
+  for (const b of ALL_BANKS) {
     const bank = await prisma.bank.create({
       data: {
         slug: b.slug,
@@ -1145,7 +1156,9 @@ async function main() {
     (await prisma.bank.findMany({ select: { id: true, slug: true } })).map((b) => [b.slug, b.id])
   );
 
-  for (const group of CREDIT_CARDS_DATA) {
+  const ALL_CREDIT_CARDS = [...CREDIT_CARDS_DATA, ...EXTENDED_CREDIT_CARDS];
+
+  for (const group of ALL_CREDIT_CARDS) {
     const bankId = bankIdBySlug.get(group.bankSlug);
     if (!bankId) continue;
     for (const c of group.cards) {
@@ -1214,6 +1227,70 @@ async function main() {
     }
   }
 
+  // Seed DPS Products
+  for (const dps of DPS_PRODUCTS_DATA) {
+    const bankId = bankIdBySlug.get(dps.bankSlug);
+    if (!bankId) continue;
+    await prisma.dpsProduct.create({
+      data: {
+        slug: dps.slug,
+        bankId,
+        name: dps.name,
+        nameBn: dps.nameBn,
+        minMonthlyDeposit: dps.minMonthlyDeposit,
+        maxMonthlyDeposit: dps.maxMonthlyDeposit,
+        interestRate: dps.interestRate,
+        tenureYears: dps.tenureYears,
+        isShariah: dps.isShariah ?? false,
+        features: JSON.stringify(dps.features),
+        featuresBn: JSON.stringify(dps.featuresBn),
+        popularity: dps.popularity ?? 50,
+      },
+    });
+  }
+
+  // Seed Credit Card Deals
+  for (const deal of CARD_DEALS_DATA) {
+    await prisma.cardDeal.create({
+      data: {
+        slug: deal.slug,
+        title: deal.title,
+        titleBn: deal.titleBn,
+        bankSlug: deal.bankSlug,
+        bankName: deal.bankName,
+        cardTier: deal.cardTier,
+        category: deal.category,
+        merchantName: deal.merchantName,
+        discountDetails: deal.discountDetails,
+        discountDetailsBn: deal.discountDetailsBn,
+        city: deal.city,
+        location: deal.location ?? null,
+        bannerBadge: deal.bannerBadge ?? null,
+        terms: deal.terms ?? null,
+        termsBn: deal.termsBn ?? null,
+        popularity: deal.popularity ?? 50,
+      },
+    });
+  }
+
+  // Seed Routing Numbers
+  for (const r of ROUTING_NUMBERS_DATA) {
+    await prisma.bankRouting.create({
+      data: {
+        bankSlug: r.bankSlug,
+        bankName: r.bankName,
+        bankNameBn: r.bankNameBn,
+        branchName: r.branchName,
+        branchNameBn: r.branchNameBn,
+        district: r.district,
+        districtBn: r.districtBn,
+        routingNumber: r.routingNumber,
+        swiftCode: r.swiftCode ?? null,
+        address: r.address ?? null,
+      },
+    });
+  }
+
   for (const rc of RATE_CHANGES) {
     const bankId = bankIdBySlug.get(rc.bankSlug);
     if (!bankId) continue;
@@ -1230,16 +1307,19 @@ async function main() {
     });
   }
 
-  const [banks, savings, fdr, rates, cards, loans] = await Promise.all([
+  const [banks, savings, fdr, rates, cards, loans, dpsCount, dealsCount, routingCount] = await Promise.all([
     prisma.bank.count(),
     prisma.savingsAccount.count(),
     prisma.fdrProduct.count(),
     prisma.fdrRate.count(),
     prisma.creditCard.count(),
     prisma.loanProduct.count(),
+    prisma.dpsProduct.count(),
+    prisma.cardDeal.count(),
+    prisma.bankRouting.count(),
   ]);
   console.log(
-    `✅ ${banks} banks · ${savings} savings · ${fdr} FDR · ${rates} rate slabs · ${cards} credit cards · ${loans} loans`
+    `✅ ${banks} banks · ${savings} savings · ${fdr} FDR · ${rates} rate slabs · ${cards} credit cards · ${loans} loans · ${dpsCount} DPS · ${dealsCount} card deals · ${routingCount} routing records`
   );
 }
 

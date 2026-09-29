@@ -12,7 +12,8 @@ import {
   X,
 } from "lucide-react";
 import { BankLogo } from "./BankLogo";
-import { Badge, Button } from "./ui";
+import { Badge } from "./ui";
+import { ApplyModal, type ApplyModalProduct } from "./ApplyModal";
 import type { LoanRow } from "@/lib/queries";
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
@@ -35,6 +36,7 @@ export function LoanExplorer({ rows, t, locale, bnNumerals }: Props) {
   const [selectedBanks, setSelectedBanks] = useState<string[]>([]);
   const [shariahOnly, setShariahOnly] = useState(false);
   const [sort, setSort] = useState<SortKey>("rate_asc");
+  const [applyProduct, setApplyProduct] = useState<ApplyModalProduct | null>(null);
 
   // Interactive Live EMI Simulation state
   const [simAmount, setSimAmount] = useState<number>(500000);
@@ -385,15 +387,31 @@ export function LoanExplorer({ rows, t, locale, bnNumerals }: Props) {
                 </div>
 
                 <div className="mt-5 border-t border-ink-100 pt-3">
-                  <Button href={loan.bank.website} external variant="secondary" className="w-full">
+                  <button
+                    onClick={() =>
+                      setApplyProduct({
+                        name: loan.name,
+                        nameBn: loan.nameBn,
+                        bankName: loan.bank.name,
+                        bankSlug: loan.bank.slug,
+                        productType: "LOAN",
+                        productSlug: loan.slug,
+                      })
+                    }
+                    className="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors shadow-xs flex items-center justify-center gap-1.5"
+                  >
                     {t.common.apply}
                     <ExternalLink className="h-3.5 w-3.5" />
-                  </Button>
+                  </button>
                 </div>
               </article>
             );
           })}
         </div>
+      )}
+
+      {applyProduct && (
+        <ApplyModal product={applyProduct} onClose={() => setApplyProduct(null)} />
       )}
     </div>
   );
