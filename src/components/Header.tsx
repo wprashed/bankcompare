@@ -33,10 +33,12 @@ interface DropdownItem {
 
 function NavDropdown({
   label,
+  icon: Icon,
   items,
   isActive,
 }: {
   label: string;
+  icon: React.ElementType;
   items: DropdownItem[];
   isActive: boolean;
 }) {
@@ -63,6 +65,7 @@ function NavDropdown({
         }`}
         aria-expanded={open}
       >
+        <Icon className={`h-3.5 w-3.5 shrink-0 ${isActive ? "text-emerald-700" : "text-slate-400 group-hover:text-slate-600"}`} />
         <span>{label}</span>
         <ChevronDown
           className={`h-3.5 w-3.5 text-slate-400 transition-transform duration-200 ${
@@ -212,6 +215,7 @@ export function Header({
           {/* Deposits dropdown */}
           <NavDropdown
             label={isBn ? "আমানত ও সঞ্চয়" : "Deposits"}
+            icon={PiggyBank}
             items={depositItems}
             isActive={isActiveAny(["/savings", "/fdr"])}
           />
@@ -229,6 +233,7 @@ export function Header({
                     : "font-medium text-slate-600 hover:text-slate-950 hover:bg-slate-100/70"
                 }`}
               >
+                <l.icon className={`h-3.5 w-3.5 shrink-0 ${active ? "text-emerald-700" : "text-slate-400"}`} />
                 <span>{l.label}</span>
                 {l.badge && (
                   <span className="inline-flex items-center rounded-md bg-amber-500/15 px-1.5 py-0.5 text-[9.5px] font-black text-amber-800 uppercase tracking-wider leading-none">
@@ -242,6 +247,7 @@ export function Header({
           {/* Tools & Calculators dropdown */}
           <NavDropdown
             label={isBn ? "টুলস ও ক্যালকুলেটর" : "Tools"}
+            icon={Layers}
             items={toolItems}
             isActive={isActiveAny([
               "/calculators",
