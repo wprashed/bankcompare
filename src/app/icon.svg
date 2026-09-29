@@ -1,4 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <rect width="64" height="64" rx="14" fill="#006a4e"/>
-  <circle cx="29" cy="32" r="13" fill="#f42a41"/>
+<svg width="64" height="64" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fav-gradient-primary" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#059669" />
+      <stop offset="50%" stopColor="#047857" />
+      <stop offset="100%" stopColor="#064e3b" />
+    </linearGradient>
+    <linearGradient id="fav-gradient-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#FBBF24" />
+      <stop offset="100%" stopColor="#D97706" />
+    </linearGradient>
+  </defs>
+
+  <rect width="48" height="48" rx="13" fill="url(#fav-gradient-primary)" />
+  <circle cx="24" cy="24" r="18" stroke="rgba(255,255,255,0.08)" strokeWidth="1.5" strokeDasharray="3 3" />
+
+  <rect x="11" y="22" width="5.5" height="15" rx="2.5" fill="rgba(255,255,255,0.85)" />
+  <rect x="21" y="16" width="5.5" height="21" rx="2.5" fill="#FFFFFF" />
+  <rect x="31" y="11" width="5.5" height="26" rx="2.5" fill="url(#fav-gradient-gold)" />
+
+  <path d="M 12 18 Q 23 9 36 8" stroke="url(#fav-gradient-gold)" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+  <circle cx="36" cy="8" r="2.5" fill="#FEF08A" />
+  <circle cx="14" cy="12" r="2" fill="#F43F5E" />
 </svg>

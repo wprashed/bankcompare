@@ -1,6 +1,16 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import {
+  Briefcase,
+  Laptop,
+  Building2,
+  UtensilsCrossed,
+  Plane,
+  ShoppingBag,
+  CreditCard,
+  ShieldCheck,
+} from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 import { formatBdt } from "@/lib/format";
 import { CreditCardRow } from "@/lib/queries";
@@ -134,9 +144,9 @@ export function CardMatcher({ cards }: CardMatcherProps) {
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {[
-                  { key: "SALARIED", label: lang === "bn" ? "বেতনভুক্ত চাকরিজীবী" : "Salaried Professional", icon: "💼" },
-                  { key: "FREELANCER", label: lang === "bn" ? "ফ্রিল্যান্সার / আইটি কর্মী" : "Freelancer / IT", icon: "💻" },
-                  { key: "BUSINESS", label: lang === "bn" ? "ব্যবসায়ী / উদ্যোক্তা" : "Business Owner", icon: "🏢" },
+                  { key: "SALARIED", label: lang === "bn" ? "বেতনভুক্ত চাকরিজীবী" : "Salaried Professional", icon: Briefcase },
+                  { key: "FREELANCER", label: lang === "bn" ? "ফ্রিল্যান্সার / আইটি কর্মী" : "Freelancer / IT", icon: Laptop },
+                  { key: "BUSINESS", label: lang === "bn" ? "ব্যবসায়ী / উদ্যোক্তা" : "Business Owner", icon: Building2 },
                 ].map((item) => (
                   <button
                     key={item.key}
@@ -144,11 +154,13 @@ export function CardMatcher({ cards }: CardMatcherProps) {
                     onClick={() => setProfession(item.key as "SALARIED" | "FREELANCER" | "BUSINESS")}
                     className={`p-4 rounded-2xl border text-left flex items-center gap-3 transition-all ${
                       profession === item.key
-                        ? "border-emerald-600 bg-emerald-50/50 dark:bg-emerald-950/30 text-emerald-900 dark:text-emerald-200 font-bold"
+                        ? "border-emerald-600 bg-emerald-50/50 dark:bg-emerald-950/30 text-emerald-900 dark:text-emerald-200 font-bold shadow-xs"
                         : "border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-850"
                     }`}
                   >
-                    <span className="text-2xl">{item.icon}</span>
+                    <div className="p-2.5 rounded-xl bg-emerald-100/70 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 shrink-0">
+                      <item.icon className="h-5 w-5" />
+                    </div>
                     <span className="text-sm font-semibold">{item.label}</span>
                   </button>
                 ))}
@@ -201,31 +213,31 @@ export function CardMatcher({ cards }: CardMatcherProps) {
                   key: "DINING",
                   title: lang === "bn" ? "১টি কিনলে ১টি ফ্রি বুফে ও ডাইনিং" : "B1G1 Hotel Buffets & Dining",
                   desc: lang === "bn" ? "ওয়েস্টিন, রেডিসন, লা মেরিডিয়ানে ফ্রি ডাইনিং" : "Complimentary 5-star hotel companion buffets",
-                  icon: "🍽️",
+                  icon: UtensilsCrossed,
                 },
                 {
                   key: "LOUNGE",
                   title: lang === "bn" ? "বিমানবন্দর লাউঞ্জ অ্যাক্সেস" : "Airport Lounge Access",
                   desc: lang === "bn" ? "বলাকা, এমটিবি ও আন্তর্জাতিক প্রায়োরিটি পাস" : "Balaka Lounge, domestic & Priority Pass access",
-                  icon: "✈️",
+                  icon: Plane,
                 },
                 {
                   key: "CASHBACK",
                   title: lang === "bn" ? "সুপারমার্কেট ক্যাশব্যাক ও মুদি" : "Supermarket & Grocery Cashback",
                   desc: lang === "bn" ? "স্বপ্ন, আগোরা, ইউনিমার্টে কেনাকাটায় সেভিংস" : "Direct percentage savings on household spend",
-                  icon: "🛍️",
+                  icon: ShoppingBag,
                 },
                 {
                   key: "LOW_FEE",
                   title: lang === "bn" ? "কম বার্ষিক ফি / ট্রানজ্যাকশনে মওকুফ" : "Low Annual Fee / Free Waiver",
                   desc: lang === "bn" ? "স্বল্প ফি ও লেনদেনের মাধ্যমে শতভাগ ফি মওকুফ" : "Minimum cost of ownership with 15 swipes waiver",
-                  icon: "💳",
+                  icon: CreditCard,
                 },
                 {
                   key: "SHARIAH",
                   title: lang === "bn" ? "শতভাগ ইসলামিক / শরীয়াহ সম্মত" : "100% Shariah Compliant",
                   desc: lang === "bn" ? "সুদমুক্ত উজরাহ চুক্তি ও হালাল কেনাকাটা" : "Zero riba, Islamic bank card with monthly Ujrah",
-                  icon: "🕌",
+                  icon: ShieldCheck,
                 },
               ].map((item) => (
                 <button
@@ -234,15 +246,17 @@ export function CardMatcher({ cards }: CardMatcherProps) {
                   onClick={() => setPriority(item.key as "DINING" | "LOUNGE" | "CASHBACK" | "LOW_FEE" | "SHARIAH")}
                   className={`p-4 rounded-2xl border text-left transition-all ${
                     priority === item.key
-                      ? "border-emerald-600 bg-emerald-50/50 dark:bg-emerald-950/30 text-emerald-900 dark:text-emerald-200"
+                      ? "border-emerald-600 bg-emerald-50/50 dark:bg-emerald-950/30 text-emerald-900 dark:text-emerald-200 shadow-xs"
                       : "border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-850"
                   }`}
                 >
-                  <div className="flex items-center gap-3 mb-1">
-                    <span className="text-2xl">{item.icon}</span>
+                  <div className="flex items-center gap-3 mb-1.5">
+                    <div className="p-2 rounded-xl bg-emerald-100/70 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 shrink-0">
+                      <item.icon className="h-4.5 w-4.5" />
+                    </div>
                     <span className="text-sm font-bold">{item.title}</span>
                   </div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 pl-9">{item.desc}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 pl-11">{item.desc}</p>
                 </button>
               ))}
             </div>

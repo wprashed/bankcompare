@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, X, ChevronDown, Calculator, PiggyBank, Landmark, LineChart, CreditCard, Banknote, Sparkles } from "lucide-react";
 import { LanguageToggle } from "./LanguageToggle";
+import { Logo } from "./Logo";
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
 
@@ -48,15 +49,7 @@ export function Header({
   return (
     <header className="no-print sticky top-0 z-50 border-b border-ink-200/80 bg-white/90 backdrop-blur-md">
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center gap-3 px-4 sm:px-6">
-        <Link href="/" className="flex items-center gap-2.5" aria-label={t.brand.name}>
-          <span className="relative grid h-9 w-9 place-items-center rounded-xl bg-brand-600">
-            <span className="h-3.5 w-3.5 rounded-full bg-flag-500" />
-          </span>
-          <span className="text-[17px] font-extrabold tracking-tight text-ink-900">
-            {t.brand.name}
-            <span className="text-brand-600">{t.brand.suffix}</span>
-          </span>
-        </Link>
+        <Logo size="sm" />
 
         <nav className="ml-6 hidden items-center gap-1 md:flex">
           {links.map((l) => (

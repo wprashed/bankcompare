@@ -1,6 +1,17 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import {
+  Sparkles,
+  UtensilsCrossed,
+  Hotel,
+  Plane,
+  ShoppingBag,
+  HeartPulse,
+  MapPin,
+  Building2,
+  Tag,
+} from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 import { CardDealRow } from "@/lib/queries";
 
@@ -15,12 +26,12 @@ export function DealExplorer({ initialDeals }: DealExplorerProps) {
   const [search, setSearch] = useState("");
 
   const categories = [
-    { key: "ALL", label: lang === "bn" ? "সব অফার" : "All Deals", icon: "✨" },
-    { key: "DINING_B1G1", label: lang === "bn" ? "১টি কিনলে ১টি ফ্রি বুফে" : "B1G1 Buffets", icon: "🍽️" },
-    { key: "HOTEL_B1G1", label: lang === "bn" ? "হোটেল ও রিসোর্ট" : "Hotels & Resorts", icon: "🏨" },
-    { key: "TRAVEL", label: lang === "bn" ? "ফ্লাইট ও ভ্রমণ" : "Flights & Travel", icon: "✈️" },
-    { key: "SHOPPING", label: lang === "bn" ? "ই-কমার্স ও শপিং" : "Shopping Deals", icon: "🛍️" },
-    { key: "HEALTHCARE", label: lang === "bn" ? "স্বাস্থ্যসেবা ও ডায়াগনস্টিক" : "Healthcare", icon: "🏥" },
+    { key: "ALL", label: lang === "bn" ? "সব অফার" : "All Deals", icon: Sparkles },
+    { key: "DINING_B1G1", label: lang === "bn" ? "১টি কিনলে ১টি ফ্রি বুফে" : "B1G1 Buffets", icon: UtensilsCrossed },
+    { key: "HOTEL_B1G1", label: lang === "bn" ? "হোটেল ও রিসোর্ট" : "Hotels & Resorts", icon: Hotel },
+    { key: "TRAVEL", label: lang === "bn" ? "ফ্লাইট ও ভ্রমণ" : "Flights & Travel", icon: Plane },
+    { key: "SHOPPING", label: lang === "bn" ? "ই-কমার্স ও শপিং" : "Shopping Deals", icon: ShoppingBag },
+    { key: "HEALTHCARE", label: lang === "bn" ? "স্বাস্থ্যসেবা ও ডায়াগনস্টিক" : "Healthcare", icon: HeartPulse },
   ];
 
   const filteredDeals = useMemo(() => {
@@ -88,7 +99,7 @@ export function DealExplorer({ initialDeals }: DealExplorerProps) {
                   : "bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
               }`}
             >
-              <span>{cat.icon}</span>
+              <cat.icon className="h-3.5 w-3.5" />
               <span>{cat.label}</span>
             </button>
           ))}
@@ -120,19 +131,22 @@ export function DealExplorer({ initialDeals }: DealExplorerProps) {
             >
               <div>
                 <div className="flex items-start justify-between gap-2 mb-2">
-                  <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
-                    {deal.bannerBadge || (lang === "bn" ? "বিশেষ অফার" : "Special Offer")}
+                  <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 flex items-center gap-1">
+                    <Tag className="h-3 w-3" />
+                    <span>{deal.bannerBadge || (lang === "bn" ? "বিশেষ অফার" : "Special Offer")}</span>
                   </span>
-                  <span className="text-xs font-medium text-slate-400">
-                    📍 {deal.city === "NATIONWIDE" ? (lang === "bn" ? "সারাদেশ" : "Nationwide") : deal.city}
+                  <span className="text-xs font-medium text-slate-400 flex items-center gap-1">
+                    <MapPin className="h-3 w-3 text-slate-400" />
+                    <span>{deal.city === "NATIONWIDE" ? (lang === "bn" ? "সারাদেশ" : "Nationwide") : deal.city}</span>
                   </span>
                 </div>
 
                 <h3 className="text-base font-bold text-slate-900 dark:text-white mt-2 leading-snug">
                   {lang === "bn" ? deal.titleBn : deal.title}
                 </h3>
-                <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1">
-                  🏢 {deal.merchantName} {deal.location && `· ${deal.location}`}
+                <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1.5">
+                  <Building2 className="h-3.5 w-3.5 text-slate-400" />
+                  <span>{deal.merchantName} {deal.location && `· ${deal.location}`}</span>
                 </p>
 
                 <p className="text-xs text-slate-700 dark:text-slate-300 mt-3 leading-relaxed">
