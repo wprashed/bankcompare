@@ -46,7 +46,7 @@ export function Header({
     { href: "/cards", label: t.nav.cards, icon: CreditCard },
     {
       href: "/deals",
-      label: locale === "bn" ? "ডিলস ও অফার" : "Deals & B1G1",
+      label: locale === "bn" ? "ডিলস ও অফার" : "Deals & Offers",
       icon: Sparkles,
       badge: "B1G1",
     },
@@ -120,7 +120,7 @@ export function Header({
               >
                 <span>{l.label}</span>
                 {l.badge && (
-                  <span className="rounded-md bg-amber-500/15 px-1.5 py-0.2 text-[9.5px] font-black text-amber-800 uppercase tracking-wider">
+                  <span className="inline-flex items-center rounded-md bg-amber-500/15 px-1.5 py-0.5 text-[9.5px] font-black text-amber-800 uppercase tracking-wider leading-none">
                     {l.badge}
                   </span>
                 )}
@@ -167,8 +167,8 @@ export function Header({
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center gap-1.5 text-[13px] font-bold text-slate-800 group-hover:text-emerald-800">
                             <span>{c.label}</span>
-                            {c.badge && (
-                              <span className="rounded bg-emerald-500/20 px-1 py-0.2 text-[9px] font-black text-emerald-800 uppercase">
+                              {c.badge && (
+                              <span className="inline-flex items-center rounded bg-emerald-500/20 px-1 py-0.5 text-[9px] font-black text-emerald-800 uppercase leading-none">
                                 {c.badge}
                               </span>
                             )}
