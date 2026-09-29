@@ -119,26 +119,7 @@ export function Footer({ t, verifiedLabel }: { t: Dictionary; verifiedLabel: str
               </div>
             </div>
 
-            {/* Newsletter Mini Form */}
-            <div className="pt-4">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-300 block mb-2">
-                {isBn ? "সুদ হার ও ডিল অ্যালার্ট পান" : "Get Rate & Offer Alerts"}
-              </span>
-              <div className="flex gap-1.5 max-w-sm">
-                <input
-                  type="email"
-                  placeholder="yourname@gmail.com"
-                  className="w-full px-3 py-1.5 text-xs rounded-xl bg-slate-900 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-                />
-                <button
-                  type="button"
-                  onClick={() => alert("Thank you for subscribing to BankBhai rate alerts!")}
-                  className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shrink-0 transition-colors"
-                >
-                  {isBn ? "সাবস্ক্রাইব" : "Join"}
-                </button>
-              </div>
-            </div>
+
           </div>
 
           {/* Col 1: Deposit Products */}
