@@ -1,0 +1,235 @@
+// BankCompare BD — Prisma schema (Phase 1 MVP, extensible to Phase 2–4)
+// Provider: SQLite for local/MVP. Swap to postgresql for production.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+/// A scheduled bank operating in Bangladesh
+model Bank {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  name            String
+  nameBn          String
+  shortName       String
+  /// STATE_OWNED | PRIVATE | ISLAMIC | FOREIGN | SPECIALIZED
+  category        String
+  isShariah       Boolean  @default(false)
+  establishedYear Int
+  headquarters    String
+  branchCount     Int      @default(0)
+  atmCount        Int      @default(0)
+  website         String
+  swiftCode       String?
+  /// Brand colour used for the generated logo tile (hex)
+  brandColor      String   @default("#006A4E")
+  logoInitials    String
+  rating          Float    @default(0)
+  reviewCount     Int      @default(0)
+  hasInternetBanking Boolean @default(true)
+  hasMobileApp    Boolean  @default(true)
+  mobileAppName   String?
+  description     String
+  descriptionBn   String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  savingsAccounts SavingsAccount[]
+  fdrProducts     FdrProduct[]
+  creditCards     CreditCard[]
+  loans           LoanProduct[]
+  rateChanges     RateChange[]
+
+  @@index([category])
+}
+
+/// Savings / deposit account product
+model SavingsAccount {
+  id                    String   @id @default(cuid())
+  slug                  String   @unique
+  bankId                String
+  bank                  Bank     @relation(fields: [bankId], references: [id], onDelete: Cascade)
+  name                  String
+  nameBn                String
+  /// Headline (minimum) annual interest / profit rate in %
+  interestRate          Float
+  /// Top slab rate in % (equals interestRate when flat)
+  interestRateMax       Float
+  minOpeningBalance     Int      @default(0)
+  /// Balance required to earn interest
+  minBalanceForInterest Int      @default(0)
+  /// Half-yearly account maintenance fee (BDT)
+  maintenanceFee        Int      @default(0)
+  debitCardAnnualFee    Int      @default(0)
+  freeChequebook        Boolean  @default(false)
+  freeDebitCard         Boolean  @default(false)
+  /// MONTHLY | QUARTERLY | HALF_YEARLY | YEARLY
+  interestPayout        String   @default("HALF_YEARLY")
+  /// Interest calculated on daily balance?
+  dailyBalanceInterest  Boolean  @default(true)
+  onlineAccountOpening  Boolean  @default(false)
+  /// GENERAL | STUDENT | SENIOR | WOMEN | SALARY | DIGITAL | NRB | KIDS
+  segment               String   @default("GENERAL")
+  isShariah             Boolean  @default(false)
+  /// JSON string array
+  features              String   @default("[]")
+  featuresBn            String   @default("[]")
+  popularity            Int      @default(0)
+  isActive              Boolean  @default(true)
+  effectiveFrom         DateTime @default(now())
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@index([bankId])
+  @@index([interestRateMax])
+  @@index([segment])
+}
+
+/// Fixed Deposit Receipt (FDR) / Term deposit product
+model FdrProduct {
+  id                  String   @id @default(cuid())
+  slug                String   @unique
+  bankId              String
+  bank                Bank     @relation(fields: [bankId], references: [id], onDelete: Cascade)
+  name                String
+  nameBn              String
+  minDeposit          Int      @default(10000)
+  maxDeposit          Int?
+  /// MATURITY | MONTHLY | QUARTERLY
+  interestPayout      String   @default("MATURITY")
+  prematureEncashment Boolean  @default(true)
+  autoRenewal         Boolean  @default(true)
+  /// Max % of FDR value available as secured loan/overdraft
+  loanAgainstFdrPct   Int?
+  isShariah           Boolean  @default(false)
+  features            String   @default("[]")
+  featuresBn          String   @default("[]")
+  isActive            Boolean  @default(true)
+  effectiveFrom       DateTime @default(now())
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  rates FdrRate[]
+
+  @@index([bankId])
+}
+
+/// Tenure-wise rate slab for an FDR product
+model FdrRate {
+  id           String     @id @default(cuid())
+  fdrProductId String
+  fdrProduct   FdrProduct @relation(fields: [fdrProductId], references: [id], onDelete: Cascade)
+  tenureMonths Int
+  rate         Float
+  minAmount    Int        @default(10000)
+  maxAmount    Int?
+
+  @@unique([fdrProductId, tenureMonths, minAmount])
+  @@index([tenureMonths])
+  @@index([rate])
+}
+
+/// Audit trail of every rate movement (powers "rate changed" badges + Phase 3 alerts)
+model RateChange {
+  id          String   @id @default(cuid())
+  bankId      String
+  bank        Bank     @relation(fields: [bankId], references: [id], onDelete: Cascade)
+  /// SAVINGS | FDR | DPS | LOAN | CARD
+  productType String
+  productId   String
+  productName String
+  oldRate     Float
+  newRate     Float
+  note        String?
+  changedAt   DateTime @default(now())
+
+  @@index([changedAt])
+  @@index([bankId])
+}
+
+/// Credit card product
+model CreditCard {
+  id                   String   @id @default(cuid())
+  slug                 String   @unique
+  bankId               String
+  bank                 Bank     @relation(fields: [bankId], references: [id], onDelete: Cascade)
+  name                 String
+  nameBn               String
+  /// VISA | MASTERCARD | AMEX | UNIONPAY
+  network              String
+  /// CLASSIC | GOLD | PLATINUM | SIGNATURE | TITANIUM | WORLD
+  tier                 String   @default("PLATINUM")
+  /// Annual fee in BDT (0 = free)
+  annualFee            Int      @default(0)
+  feeWaiverCondition   String?
+  feeWaiverConditionBn String?
+  /// Monthly interest rate (e.g. 1.67%)
+  interestRateMonthly  Float    @default(1.67)
+  /// Annual percentage rate (e.g. 20.0%)
+  interestRateAnnual   Float    @default(20.0)
+  interestFreeDays     Int      @default(45)
+  minIncome            Int      @default(30000)
+  isDualCurrency       Boolean  @default(true)
+  airportLoungeAccess  Boolean  @default(false)
+  loungeDetails        String?
+  loungeDetailsBn      String?
+  /// CASHBACK | REWARDS | MILES
+  rewardType           String   @default("REWARDS")
+  rewardSummary        String   @default("")
+  rewardSummaryBn      String   @default("")
+  zeroPctEmiAvailable  Boolean  @default(true)
+  maxEmiMonths         Int      @default(24)
+  contactless          Boolean  @default(true)
+  isShariah            Boolean  @default(false)
+  cardColor            String   @default("#1e293b")
+  features             String   @default("[]")
+  featuresBn           String   @default("[]")
+  popularity           Int      @default(50)
+  isActive             Boolean  @default(true)
+  effectiveFrom        DateTime @default(now())
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@index([bankId])
+  @@index([network])
+  @@index([tier])
+  @@index([annualFee])
+}
+
+/// Retail Loan / Credit Facility product
+model LoanProduct {
+  id               String   @id @default(cuid())
+  slug             String   @unique
+  bankId           String
+  bank             Bank     @relation(fields: [bankId], references: [id], onDelete: Cascade)
+  name             String
+  nameBn           String
+  /// PERSONAL | HOME | AUTO | EDUCATION
+  loanType         String   @default("PERSONAL")
+  interestRateMin  Float
+  interestRateMax  Float
+  minAmount        Int      @default(50000)
+  maxAmount        Int      @default(2000000)
+  minTenureMonths  Int      @default(12)
+  maxTenureMonths  Int      @default(60)
+  processingFeePct Float    @default(0.5)
+  minIncome        Int      @default(30000)
+  isShariah        Boolean  @default(false)
+  features         String   @default("[]")
+  featuresBn       String   @default("[]")
+  popularity       Int      @default(50)
+  isActive         Boolean  @default(true)
+  effectiveFrom    DateTime @default(now())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([bankId])
+  @@index([loanType])
+  @@index([interestRateMin])
+}
+

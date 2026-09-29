@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+@theme {
+  /* Bangladesh green */
+  --color-brand-50: #eefaf4;
+  --color-brand-100: #d5f3e4;
+  --color-brand-200: #ade6cc;
+  --color-brand-300: #78d3ac;
+  --color-brand-400: #42b98a;
+  --color-brand-500: #1c9c6c;
+  --color-brand-600: #006a4e;
+  --color-brand-700: #015a43;
+  --color-brand-800: #064736;
+  --color-brand-900: #073b2e;
+
+  /* Bangladesh red */
+  --color-flag-50: #fff1f2;
+  --color-flag-100: #ffe1e3;
+  --color-flag-200: #ffc8cc;
+  --color-flag-300: #ffa1a9;
+  --color-flag-400: #ff6b78;
+  --color-flag-500: #f42a41;
+  --color-flag-600: #dd0f28;
+  --color-flag-700: #ba0b21;
+  --color-flag-800: #9a0e20;
+  --color-flag-900: #801121;
+
+  --color-ink-50: #f7f8f8;
+  --color-ink-100: #eef0f1;
+  --color-ink-200: #dfe3e5;
+  --color-ink-300: #c6ccd0;
+  --color-ink-400: #98a2a9;
+  --color-ink-500: #6b757d;
+  --color-ink-600: #4c565d;
+  --color-ink-700: #3a4348;
+  --color-ink-800: #22292d;
+  --color-ink-900: #12181b;
+
+  /* Noto Sans Bengali is kept in the Latin stack too: it supplies the ৳ (U+09F3)
+     taka sign and Bengali numerals, which Inter does not contain. */
+  --font-sans: var(--font-inter), var(--font-bengali), ui-sans-serif, system-ui, sans-serif;
+  --font-bengali: var(--font-bengali), var(--font-inter), sans-serif;
+
+  --radius-xl2: 1.25rem;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: #ffffff;
+  color: var(--color-ink-800);
+  font-feature-settings: "cv02", "cv03", "cv04", "tnum";
+}
+
+html[lang="bn"] body {
+  font-family: var(--font-bengali);
+}
+
+/* Numeric columns line up */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Subtle grid backdrop for hero sections */
+.hero-grid {
+  background-image:
+    radial-gradient(60rem 30rem at 85% -10%, rgba(0, 106, 78, 0.10), transparent 60%),
+    radial-gradient(40rem 24rem at 5% 0%, rgba(244, 42, 65, 0.08), transparent 60%),
+    linear-gradient(to bottom, #ffffff, #f7faf8);
+}
+
+.card {
+  background: #fff;
+  border: 1px solid var(--color-ink-200);
+  border-radius: var(--radius-xl2);
+}
+
+.card-hover {
+  transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+}
+.card-hover:hover {
+  box-shadow: 0 12px 34px -18px rgba(18, 24, 27, 0.25);
+  border-color: var(--color-brand-200);
+  transform: translateY(-2px);
+}
+
+/* Range slider */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-ink-200);
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--color-brand-600);
+  border: 3px solid #fff;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--color-brand-600);
+  border: 3px solid #fff;
+  cursor: pointer;
+}
+
+/* Marquee for the rate ticker */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 42s linear infinite;
+}
+.marquee-wrap:hover .marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
+
+::selection {
+  background: var(--color-brand-100);
+}
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff; }
+}
