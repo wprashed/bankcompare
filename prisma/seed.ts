@@ -10,6 +10,7 @@ import { CREDIT_CARDS_DATA, LOANS_DATA } from "./creditSeed";
 import { EXTENDED_BANKS } from "./extendedBanks";
 import { EXTENDED_CREDIT_CARDS } from "./extendedCreditCards";
 import { ADDITIONAL_LOANS, SIBL_CREDIT_CARDS } from "./extendedLoans";
+import { MORE_CREDIT_CARDS } from "./moreCreditCards";
 import { CARD_DEALS_DATA } from "./dealsSeed";
 import { DPS_PRODUCTS_DATA } from "./dpsSeed";
 import { ROUTING_NUMBERS_DATA } from "./routingSeed";
@@ -1160,6 +1161,7 @@ async function main() {
   const ALL_CREDIT_CARDS = [
     ...CREDIT_CARDS_DATA,
     ...EXTENDED_CREDIT_CARDS,
+    ...MORE_CREDIT_CARDS,
     { bankSlug: "social-islami-bank", cards: SIBL_CREDIT_CARDS },
   ];
 

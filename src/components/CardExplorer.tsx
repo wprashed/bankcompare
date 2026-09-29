@@ -46,6 +46,13 @@ type SortKey = "popular" | "fee_asc" | "apr_asc" | "income_asc" | "bank_asc";
 
 const NETWORKS = ["VISA", "MASTERCARD", "AMEX"];
 const TIERS = ["CLASSIC", "GOLD", "PLATINUM", "SIGNATURE", "TITANIUM", "WORLD"];
+const MAX_FEE_OPTIONS = [
+  { label: "Any", value: 0 },
+  { label: "Free", value: 1 },
+  { label: "≤ ৳2,000", value: 2000 },
+  { label: "≤ ৳5,000", value: 5000 },
+  { label: "≤ ৳10,000", value: 10000 },
+];
 
 export function CardExplorer({ rows, t, locale, bnNumerals, initial }: Props) {
   const router = useRouter();
@@ -62,6 +69,8 @@ export function CardExplorer({ rows, t, locale, bnNumerals, initial }: Props) {
   const [loungeOnly, setLoungeOnly] = useState(initial.lounge === "1");
   const [zeroEmiOnly, setZeroEmiOnly] = useState(false);
   const [shariahOnly, setShariahOnly] = useState(false);
+  const [selectedRewardType, setSelectedRewardType] = useState<string>("");
+  const [maxFee, setMaxFee] = useState<number>(0);
   const [userIncome, setUserIncome] = useState<number>(50000);
   const [compare, setCompare] = useState<string[]>([]);
   const [showCompare, setShowCompare] = useState(false);
@@ -120,6 +129,9 @@ export function CardExplorer({ rows, t, locale, bnNumerals, initial }: Props) {
       if (loungeOnly && !r.airportLoungeAccess) return false;
       if (zeroEmiOnly && !r.zeroPctEmiAvailable) return false;
       if (shariahOnly && !r.isShariah) return false;
+      if (selectedRewardType && r.rewardType !== selectedRewardType) return false;
+      if (maxFee === 1 && r.annualFee > 0) return false;
+      if (maxFee > 1 && r.annualFee > maxFee) return false;
       return true;
     });
 
@@ -152,6 +164,8 @@ export function CardExplorer({ rows, t, locale, bnNumerals, initial }: Props) {
     loungeOnly,
     zeroEmiOnly,
     shariahOnly,
+    selectedRewardType,
+    maxFee,
     sort,
   ]);
 
@@ -173,7 +187,9 @@ export function CardExplorer({ rows, t, locale, bnNumerals, initial }: Props) {
     (feeWaiverOnly ? 1 : 0) +
     (loungeOnly ? 1 : 0) +
     (zeroEmiOnly ? 1 : 0) +
-    (shariahOnly ? 1 : 0);
+    (shariahOnly ? 1 : 0) +
+    (selectedRewardType ? 1 : 0) +
+    (maxFee > 0 ? 1 : 0);
 
   const resetFilters = () => {
     setQ("");
@@ -185,6 +201,8 @@ export function CardExplorer({ rows, t, locale, bnNumerals, initial }: Props) {
     setLoungeOnly(false);
     setZeroEmiOnly(false);
     setShariahOnly(false);
+    setSelectedRewardType("");
+    setMaxFee(0);
   };
 
   return (
@@ -331,6 +349,74 @@ export function CardExplorer({ rows, t, locale, bnNumerals, initial }: Props) {
                   }`}
                 >
                   {t.bank.tier[tier] ?? tier}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Reward Type */}
+          <div className="mt-6 border-t border-ink-100 pt-5">
+            <label className="text-[12.5px] font-bold text-ink-700">
+              {locale === "bn" ? "রিওয়ার্ড ধরন" : "Reward Type"}
+            </label>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              <button
+                onClick={() => setSelectedRewardType("")}
+                className={`rounded-md px-2.5 py-1 text-[11.5px] font-semibold transition-colors ${
+                  selectedRewardType === "" ? "bg-brand-600 text-white" : "bg-ink-100 text-ink-600 hover:bg-ink-200"
+                }`}
+              >
+                {locale === "bn" ? "সব" : "All"}
+              </button>
+              <button
+                onClick={() => setSelectedRewardType(prev => prev === "CASHBACK" ? "" : "CASHBACK")}
+                className={`flex items-center gap-1 rounded-md px-2.5 py-1 text-[11.5px] font-semibold transition-colors ${
+                  selectedRewardType === "CASHBACK" ? "bg-emerald-600 text-white" : "bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
+                }`}
+              >
+                <CircleDollarSign className="h-3 w-3" />
+                {locale === "bn" ? "ক্যাশব্যাক" : "Cashback"}
+              </button>
+              <button
+                onClick={() => setSelectedRewardType(prev => prev === "REWARDS" ? "" : "REWARDS")}
+                className={`flex items-center gap-1 rounded-md px-2.5 py-1 text-[11.5px] font-semibold transition-colors ${
+                  selectedRewardType === "REWARDS" ? "bg-amber-500 text-white" : "bg-amber-50 text-amber-700 hover:bg-amber-100"
+                }`}
+              >
+                <Gift className="h-3 w-3" />
+                {locale === "bn" ? "পয়েন্ট" : "Points"}
+              </button>
+              <button
+                onClick={() => setSelectedRewardType(prev => prev === "MILES" ? "" : "MILES")}
+                className={`flex items-center gap-1 rounded-md px-2.5 py-1 text-[11.5px] font-semibold transition-colors ${
+                  selectedRewardType === "MILES" ? "bg-blue-600 text-white" : "bg-blue-50 text-blue-700 hover:bg-blue-100"
+                }`}
+              >
+                <Plane className="h-3 w-3" />
+                {locale === "bn" ? "মাইলস" : "Miles"}
+              </button>
+            </div>
+          </div>
+
+          {/* Max Annual Fee */}
+          <div className="mt-6 border-t border-ink-100 pt-5">
+            <label className="text-[12.5px] font-bold text-ink-700">
+              {locale === "bn" ? "সর্বোচ্চ বার্ষিক ফি" : "Max Annual Fee"}
+            </label>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {MAX_FEE_OPTIONS.map((opt) => (
+                <button
+                  key={opt.value}
+                  onClick={() => setMaxFee(prev => prev === opt.value ? 0 : opt.value)}
+                  className={`rounded-md px-2.5 py-1 text-[11.5px] font-semibold transition-colors ${
+                    maxFee === opt.value && opt.value > 0
+                      ? "bg-brand-600 text-white"
+                      : opt.value === 0
+                      ? maxFee === 0 ? "bg-brand-600 text-white" : "bg-ink-100 text-ink-600 hover:bg-ink-200"
+                      : "bg-ink-100 text-ink-600 hover:bg-ink-200"
+                  }`}
+                >
+                  {opt.label}
                 </button>
               ))}
             </div>
