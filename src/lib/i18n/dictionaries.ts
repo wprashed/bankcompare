@@ -2,7 +2,7 @@ import type { Locale } from "./config";
 
 export const dictionaries = {
   en: {
-    brand: { name: "BankCompare", suffix: "BD", tagline: "Compare every bank in Bangladesh" },
+    brand: { name: "BankBhai", suffix: "BD", tagline: "Your Trusted Banking Companion in Bangladesh" },
     nav: {
       home: "Home",
       savings: "Savings Accounts",
@@ -71,9 +71,9 @@ export const dictionaries = {
       calcTitle: "Plan before you commit",
       calcSubtitle: "Run the numbers with our Bangladesh-specific calculators — including 10% source tax on interest.",
       banksTitle: "Banks we track",
-      banksSubtitle: "Top 10 banks by deposits in Phase 1. More being added every week.",
+      banksSubtitle: "Comparing 27 leading scheduled banks across commercial, Islamic, and multinational sectors.",
       tickerTitle: "Rate watch",
-      whyTitle: "Why BankCompare BD",
+      whyTitle: "Why BankBhai",
       why1Title: "Real published rates",
       why1Body: "Every rate is sourced from the bank's own schedule of charges and stamped with a verification date.",
       why2Title: "Bangladesh-specific maths",
@@ -311,7 +311,7 @@ export const dictionaries = {
     footer: {
       about: "About",
       aboutBody:
-        "BankCompare BD is an independent comparison service for Bangladeshi banking products. We are not a bank and we do not sell financial products.",
+        "BankBhai is an independent financial aggregator and comparison platform for Bangladeshi banking products. We are not a bank and we do not sell financial products.",
       products: "Compare",
       tools: "Tools",
       company: "Company",
@@ -348,7 +348,7 @@ export const dictionaries = {
   },
 
   bn: {
-    brand: { name: "ব্যাংককম্পেয়ার", suffix: "বিডি", tagline: "বাংলাদেশের সব ব্যাংক তুলনা করুন" },
+    brand: { name: "ব্যাংকভাই", suffix: "বিডি", tagline: "আপনার বিশ্বস্ত ব্যাংকিং গাইড" },
     nav: {
       home: "হোম",
       savings: "সঞ্চয়ী হিসাব",
@@ -417,9 +417,9 @@ export const dictionaries = {
       calcTitle: "সিদ্ধান্তের আগে হিসাব করুন",
       calcSubtitle: "বাংলাদেশের জন্য তৈরি ক্যালকুলেটরে হিসাব মিলিয়ে নিন — ১০% উৎসে কর সহ।",
       banksTitle: "যেসব ব্যাংক আমরা ট্র্যাক করি",
-      banksSubtitle: "প্রথম ধাপে আমানতের ভিত্তিতে শীর্ষ ১০ ব্যাংক। প্রতি সপ্তাহে আরও যুক্ত হচ্ছে।",
+      banksSubtitle: "বাণিজ্যিক, ইসলামি ও বহুজাতিক সহ দেশের ২৭টি শীর্ষস্থানীয় ব্যাংকের তথ্য তুলনা।",
       tickerTitle: "হার পর্যবেক্ষণ",
-      whyTitle: "কেন ব্যাংককম্পেয়ার বিডি",
+      whyTitle: "কেন ব্যাংকভাই",
       why1Title: "প্রকাশিত প্রকৃত হার",
       why1Body: "প্রতিটি হার ব্যাংকের নিজস্ব চার্জ তালিকা থেকে নেওয়া এবং যাচাইয়ের তারিখসহ প্রকাশিত।",
       why2Title: "বাংলাদেশভিত্তিক হিসাব",
@@ -657,7 +657,7 @@ export const dictionaries = {
     footer: {
       about: "পরিচিতি",
       aboutBody:
-        "ব্যাংককম্পেয়ার বিডি বাংলাদেশের ব্যাংকিং পণ্যের একটি স্বাধীন তুলনামূলক সেবা। আমরা ব্যাংক নই এবং কোনো আর্থিক পণ্য বিক্রি করি না।",
+        "ব্যাংকভাই বাংলাদেশের ব্যাংকিং পণ্যের একটি স্বাধীন তুলনামূলক প্ল্যাটফর্ম। আমরা ব্যাংক নই এবং কোনো আর্থিক পণ্য বিক্রি করি না।",
       products: "তুলনা",
       tools: "টুলস",
       company: "প্রতিষ্ঠান",

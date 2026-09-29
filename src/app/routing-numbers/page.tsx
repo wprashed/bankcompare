@@ -3,7 +3,7 @@ import { getBankRoutings } from "@/lib/queries";
 import { RoutingExplorer } from "@/components/RoutingExplorer";
 
 export const metadata: Metadata = {
-  title: "Bank Routing Numbers & SWIFT Codes in Bangladesh | BankCompare BD",
+  title: "Bank Routing Numbers & SWIFT Codes in Bangladesh | BankBhai",
   description:
     "Comprehensive directory of 9-digit Bangladesh Bank Routing Numbers and SWIFT/BIC codes for BEFTN, RTGS, and NPSB inter-bank transfers across all scheduled banks.",
 };

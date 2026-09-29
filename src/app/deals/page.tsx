@@ -3,7 +3,7 @@ import { getCardDeals } from "@/lib/queries";
 import { DealExplorer } from "@/components/DealExplorer";
 
 export const metadata: Metadata = {
-  title: "Credit Card B1G1 Buffets & Dining Deals in Bangladesh | BankCompare BD",
+  title: "Credit Card B1G1 Buffets & Dining Deals in Bangladesh | BankBhai",
   description:
     "Discover all Buy 1 Get 1 free hotel buffets, restaurant discounts, international airline deals, and e-commerce shopping offers on credit cards in Bangladesh.",
 };

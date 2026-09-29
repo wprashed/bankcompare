@@ -25,8 +25,8 @@ const bengali = Noto_Sans_Bengali({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "BankCompare BD — Compare Savings, FDR & Loan Rates in Bangladesh",
-    template: "%s | BankCompare BD",
+    default: "BankBhai — Smart Bank Rate, Credit Card & Loan Comparison in Bangladesh",
+    template: "%s | BankBhai",
   },
   description:
     "Compare savings account interest rates, FDR rates, loans and credit cards from the top banks in Bangladesh. Free, unbiased and updated with published bank rates.",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     "ব্যাংক সুদের হার",
     "এফডিআর হার বাংলাদেশ",
   ],
-  authors: [{ name: "BankCompare BD" }],
+  authors: [{ name: "BankBhai" }],
   alternates: {
     canonical: "/",
     languages: { en: "/", bn: "/" },
@@ -52,14 +52,14 @@ export const metadata: Metadata = {
     locale: "en_US",
     alternateLocale: ["bn_BD"],
     url: SITE_URL,
-    siteName: "BankCompare BD",
-    title: "BankCompare BD — Compare Savings, FDR & Loan Rates in Bangladesh",
+    siteName: "BankBhai",
+    title: "BankBhai — Smart Bank Rate, Credit Card & Loan Comparison in Bangladesh",
     description:
       "Compare savings account interest rates, FDR rates, loans and credit cards from the top banks in Bangladesh.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "BankCompare BD — Compare bank rates in Bangladesh",
+    title: "BankBhai — Compare bank rates in Bangladesh",
     description: "Free, unbiased comparison of savings accounts, FDR rates and loans in Bangladesh.",
   },
   robots: { index: true, follow: true },
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#006a4e",
+  themeColor: "#059669",
   width: "device-width",
   initialScale: 1,
 };
@@ -78,7 +78,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const organizationLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "BankCompare BD",
+    name: "BankBhai",
     url: SITE_URL,
     description:
       "Independent comparison service for Bangladeshi banking products — savings accounts, fixed deposits (FDR), loans and cards.",
@@ -89,7 +89,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const websiteLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "BankCompare BD",
+    name: "BankBhai",
     url: SITE_URL,
     inLanguage: locale === "bn" ? "bn-BD" : "en-BD",
     potentialAction: {

@@ -1,18 +1,21 @@
-# BankCompare BD
+# BankBhai (ব্যাংকভাই)
 
-Independent comparison platform for Bangladeshi banking products: savings accounts, fixed deposits (FDR), credit cards, loans and calculators.
+Independent financial aggregator and intelligence platform for Bangladeshi banking products: savings accounts, fixed deposits (FDR), credit cards, B1G1 deals, loans, and calculators.
 Built with Next.js 15 (App Router), TypeScript, Tailwind CSS v4 and Prisma.
 
 **Features delivered:**
+- **27 Scheduled Banks Monitored** (Commercial, Islamic, Multinational, and Specialized)
 - **Savings Account Comparison** (filter + sort + 3-way side-by-side compare)
 - **FDR Rate Comparison & Calculator** (10%/15% source tax, maturity schedule)
 - **Credit Card Explorer & Comparison** (annual fees, fee waivers, airport lounge access, 0% EMI, rewards, side-by-side card compare matrix)
-- **Retail Loans & Credit Facilities** (Personal, Home & Auto loans with live interactive EMI simulator)
-- **Calculators** (FDR maturity, reducing-balance Loan EMI, and Credit Card Payoff / BB DBR Loan Eligibility)
-- **Bank Profiles** with full product offerings (Savings, FDR, Cards, Loans)
+- **Buy-1-Get-1 Deals & Luxury Buffets Hub** (Westin, Le Méridien, InterContinental, Radisson, Sheraton, Amari)
+- **Card Matcher Quiz** (find ideal card in 60 seconds based on income and benefits)
+- **DPS Post-Tax Maturity Calculator** (compound interest, NBR source tax & excise duty deductions)
+- **Retail Loans & Credit Facilities** (Personal, Home & Auto loans across all 27 banks with live interactive EMI simulator)
+- **Bangladesh Bank 9-digit Routing Numbers & SWIFT Codes Directory**
+- **Automated Weekly Data Updater** (SMART benchmark drifts, rate change audit logs, Sunday Vercel Cron)
 - **Full EN / BN Localisation**, Bengali numerals, BDT lakh/crore formatting
 - **SEO & Structured Data** (JSON-LD ItemLists, WebApplication, breadcrumbs, sitemap)
-- **Seeded Top-10 Bangladesh Bank dataset** (10 banks, 27 savings products, 12 FDR products, 62 rate slabs, 18 credit cards, 18 loans)
 
 ---
 
@@ -127,5 +130,5 @@ inline), ~102 kB first-load JS.
 
 ## Disclaimer
 
-BankCompare BD is not a bank and does not sell financial products. Information is for general guidance only and is not
+BankBhai is not a bank and does not sell financial products. Information is for general guidance only and is not
 financial advice.

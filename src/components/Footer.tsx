@@ -127,12 +127,12 @@ export function Footer({ t, verifiedLabel }: { t: Dictionary; verifiedLabel: str
               <div className="flex gap-1.5 max-w-sm">
                 <input
                   type="email"
-                  placeholder="your.email@example.com"
+                  placeholder="yourname@gmail.com"
                   className="w-full px-3 py-1.5 text-xs rounded-xl bg-slate-900 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
                 />
                 <button
                   type="button"
-                  onClick={() => alert("Thank you for subscribing to BankCompare rate alerts!")}
+                  onClick={() => alert("Thank you for subscribing to BankBhai rate alerts!")}
                   className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shrink-0 transition-colors"
                 >
                   {isBn ? "সাবস্ক্রাইব" : "Join"}
@@ -293,15 +293,15 @@ export function Footer({ t, verifiedLabel }: { t: Dictionary; verifiedLabel: str
           </div>
           <p>
             {isBn
-              ? "ব্যাংককম্পেয়ার বিডি একটি স্বাধীন তথ্য ও গবেষণা প্ল্যাটফর্ম। সমস্ত তথ্য সংশ্লিষ্ট ব্যাংকসমূহের প্রকাশিত শিডিউল অব চার্জেস এবং বাংলাদেশ ব্যাংকের নির্দেশনার আলোকে সংগৃহীত। আমানত বা ঋণের চূড়ান্ত শর্তাবলি ব্যাংক কর্তৃপক্ষের সিদ্ধান্ত সাপেক্ষে পরিবর্তিত হতে পারে। সিদ্ধান্ত গ্রহণের পূর্বে ব্যাংকের সংশ্লিষ্ট শাখায় যাচাই করার পরামর্শ দেওয়া হচ্ছে।"
-              : "BankCompare BD is an independent financial aggregator. All interest rates, charges, and perks are compiled from public bank schedules of charges and Bangladesh Bank circulars. Final terms remain subject to bank approval. Users are encouraged to verify current rates with respective bank branches before entering financial commitments."}
+              ? "ব্যাংকভাই একটি স্বাধীন আর্থিক তথ্য ও গবেষণা প্ল্যাটফর্ম। সমস্ত তথ্য সংশ্লিষ্ট ব্যাংকসমূহের প্রকাশিত শিডিউল অব চার্জেস এবং বাংলাদেশ ব্যাংকের নির্দেশনার আলোকে সংগৃহীত। আমানত বা ঋণের চূড়ান্ত শর্তাবলি ব্যাংক কর্তৃপক্ষের সিদ্ধান্ত সাপেক্ষে পরিবর্তিত হতে পারে। সিদ্ধান্ত গ্রহণের পূর্বে ব্যাংকের সংশ্লিষ্ট শাখায় যাচাই করার পরামর্শ দেওয়া হচ্ছে।"
+              : "BankBhai is an independent financial aggregator. All interest rates, charges, and perks are compiled from public bank schedules of charges and Bangladesh Bank circulars. Final terms remain subject to bank approval. Users are encouraged to verify current rates with respective bank branches before entering financial commitments."}
           </p>
         </div>
 
         {/* ---------------- 4. Bottom Copyright & Back to Top ---------------- */}
         <div className="mt-8 pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <div className="flex items-center gap-2">
-            <span>© {year} BankCompare BD. All rights reserved.</span>
+            <span>© {year} BankBhai. All rights reserved.</span>
             <span>·</span>
             <Link href="/privacy" className="hover:text-slate-300 transition-colors">Privacy Policy</Link>
             <span>·</span>

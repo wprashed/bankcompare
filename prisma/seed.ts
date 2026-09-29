@@ -9,6 +9,7 @@ import { PrismaClient } from "@prisma/client";
 import { CREDIT_CARDS_DATA, LOANS_DATA } from "./creditSeed";
 import { EXTENDED_BANKS } from "./extendedBanks";
 import { EXTENDED_CREDIT_CARDS } from "./extendedCreditCards";
+import { ADDITIONAL_LOANS, SIBL_CREDIT_CARDS } from "./extendedLoans";
 import { CARD_DEALS_DATA } from "./dealsSeed";
 import { DPS_PRODUCTS_DATA } from "./dpsSeed";
 import { ROUTING_NUMBERS_DATA } from "./routingSeed";
@@ -1054,7 +1055,7 @@ const RATE_CHANGES: {
 ];
 
 async function main() {
-  console.log("🌱 Seeding BankCompare BD…");
+  console.log("🌱 Seeding BankBhai…");
 
   await prisma.rateChange.deleteMany();
   await prisma.fdrRate.deleteMany();
@@ -1156,7 +1157,11 @@ async function main() {
     (await prisma.bank.findMany({ select: { id: true, slug: true } })).map((b) => [b.slug, b.id])
   );
 
-  const ALL_CREDIT_CARDS = [...CREDIT_CARDS_DATA, ...EXTENDED_CREDIT_CARDS];
+  const ALL_CREDIT_CARDS = [
+    ...CREDIT_CARDS_DATA,
+    ...EXTENDED_CREDIT_CARDS,
+    { bankSlug: "social-islami-bank", cards: SIBL_CREDIT_CARDS },
+  ];
 
   for (const group of ALL_CREDIT_CARDS) {
     const bankId = bankIdBySlug.get(group.bankSlug);
@@ -1198,7 +1203,8 @@ async function main() {
     }
   }
 
-  for (const group of LOANS_DATA) {
+  const ALL_LOANS = [...LOANS_DATA, ...ADDITIONAL_LOANS];
+  for (const group of ALL_LOANS) {
     const bankId = bankIdBySlug.get(group.bankSlug);
     if (!bankId) continue;
     for (const l of group.loans) {

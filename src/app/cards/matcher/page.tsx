@@ -3,7 +3,7 @@ import { getCreditCardRows } from "@/lib/queries";
 import { CardMatcher } from "@/components/CardMatcher";
 
 export const metadata: Metadata = {
-  title: "Credit Card Matcher Quiz — Find Your Ideal Bangladeshi Card | BankCompare BD",
+  title: "Credit Card Matcher Quiz — Find Your Ideal Bangladeshi Card | BankBhai",
   description:
     "Answer 3 simple questions about your monthly income and lifestyle priorities to find the highest-value credit cards with airport lounges, B1G1 buffets, and cashback.",
 };

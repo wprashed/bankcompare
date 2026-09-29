@@ -1,7 +1,7 @@
 import { runWeeklyDataSync } from "../src/lib/services/updater";
 
 async function main() {
-  console.log("🚀 Executing BankCompare BD Weekly Data Update...");
+  console.log("🚀 Executing BankBhai Weekly Data Update...");
   try {
     const result = await runWeeklyDataSync();
     console.log("--------------------------------------------------");

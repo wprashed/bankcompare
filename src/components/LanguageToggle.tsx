@@ -25,16 +25,20 @@ export function LanguageToggle({ locale, bnNumerals }: { locale: Locale; bnNumer
   };
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-1.5">
       <div
-        className={`flex items-center rounded-full bg-ink-100 p-0.5 text-[12px] font-semibold ${pending ? "opacity-60" : ""}`}
+        className={`flex items-center rounded-full border border-slate-200/80 bg-slate-100/70 p-0.5 text-[11.5px] font-bold ${
+          pending ? "opacity-60" : ""
+        }`}
         role="group"
-        aria-label="Language"
+        aria-label="Language selection"
       >
         <button
           onClick={() => change("en")}
-          className={`rounded-full px-2.5 py-1 transition-colors ${
-            locale === "en" ? "bg-white text-ink-900 shadow-sm" : "text-ink-500 hover:text-ink-800"
+          className={`rounded-full px-2.5 py-1 transition-all duration-150 ${
+            locale === "en"
+              ? "bg-white text-slate-900 shadow-2xs font-bold"
+              : "text-slate-500 hover:text-slate-900"
           }`}
           aria-pressed={locale === "en"}
         >
@@ -42,8 +46,10 @@ export function LanguageToggle({ locale, bnNumerals }: { locale: Locale; bnNumer
         </button>
         <button
           onClick={() => change("bn")}
-          className={`rounded-full px-2.5 py-1 transition-colors ${
-            locale === "bn" ? "bg-white text-ink-900 shadow-sm" : "text-ink-500 hover:text-ink-800"
+          className={`rounded-full px-2.5 py-1 transition-all duration-150 ${
+            locale === "bn"
+              ? "bg-white text-emerald-800 shadow-2xs font-bold"
+              : "text-slate-500 hover:text-slate-900"
           }`}
           aria-pressed={locale === "bn"}
         >
@@ -53,11 +59,11 @@ export function LanguageToggle({ locale, bnNumerals }: { locale: Locale; bnNumer
       {locale === "bn" && (
         <button
           onClick={toggleNumerals}
-          title="Bengali numerals"
-          className={`rounded-full px-2 py-1 text-[12px] font-semibold ring-1 ring-inset transition-colors ${
+          title="বাংলা সংখ্যা টগল করুন"
+          className={`rounded-full px-2 py-1 text-[11px] font-bold ring-1 ring-inset transition-colors ${
             bnNumerals
-              ? "bg-brand-600 text-white ring-brand-600"
-              : "bg-white text-ink-500 ring-ink-200 hover:text-ink-800"
+              ? "bg-emerald-600 text-white ring-emerald-600 shadow-2xs"
+              : "bg-white text-slate-600 ring-slate-200 hover:text-slate-900"
           }`}
           aria-pressed={bnNumerals}
         >

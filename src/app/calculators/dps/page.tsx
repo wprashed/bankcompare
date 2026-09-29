@@ -3,7 +3,7 @@ import { getDpsProducts } from "@/lib/queries";
 import { DpsCalculator } from "@/components/DpsCalculator";
 
 export const metadata: Metadata = {
-  title: "DPS Calculator Bangladesh — Maturity & Post-Tax Payout Estimator | BankCompare BD",
+  title: "DPS Calculator Bangladesh — Maturity & Post-Tax Payout Estimator | BankBhai",
   description:
     "Calculate your Deposit Pension Scheme (DPS) maturity value, gross interest, NBR Advance Income Tax (10% with TIN / 15% without), and Excise Duty deductions.",
 };

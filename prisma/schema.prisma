@@ -1,4 +1,4 @@
-// BankCompare BD — Prisma schema (Phase 1 MVP, extensible to Phase 2–4)
+// BankBhai — Prisma schema (Phase 1 MVP, extensible to Phase 2–4)
 // Provider: SQLite for local/MVP. Swap to postgresql for production.
 
 generator client {
