@@ -5,6 +5,7 @@ interface LogoProps {
   className?: string;
   size?: "sm" | "md" | "lg";
   showText?: boolean;
+  showTagline?: boolean;
   inverted?: boolean;
   href?: string;
 }
@@ -26,10 +27,6 @@ export function LogoIcon({ size = 36, className = "" }: { size?: number; classNa
           <stop offset="60%" stopColor="#047857" />
           <stop offset="100%" stopColor="#064e3b" />
         </linearGradient>
-        <linearGradient id="bb-grad-mint" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#34D399" />
-          <stop offset="100%" stopColor="#059669" />
-        </linearGradient>
         <linearGradient id="bb-grad-gold" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#FBBF24" />
           <stop offset="100%" stopColor="#D97706" />
@@ -39,44 +36,31 @@ export function LogoIcon({ size = 36, className = "" }: { size?: number; classNa
         </filter>
       </defs>
 
-      {/* Rounded Squircle Shield Container with subtle border */}
+      {/* Squircle background */}
       <rect
-        x="1.5"
-        y="1.5"
-        width="45"
-        height="45"
-        rx="13"
+        x="1.5" y="1.5" width="45" height="45" rx="13"
         fill="url(#bb-grad-primary)"
-        stroke="rgba(255, 255, 255, 0.2)"
+        stroke="rgba(255,255,255,0.2)"
         strokeWidth="1.5"
       />
 
-      {/* Modern stylized geometric interlocking "B" + Growth pillars */}
-      {/* Vertical Spine (Solid Trust & Stability) */}
+      {/* Vertical spine */}
       <rect x="12" y="11" width="5.5" height="26" rx="2.75" fill="#FFFFFF" />
 
-      {/* Upper Loop of 'B' (Rates growth curve) */}
+      {/* Upper loop of B */}
       <path
         d="M 17 11 H 27.5 C 31 11 33.5 13.5 33.5 17 C 33.5 20.5 31 23 27.5 23 H 17"
-        stroke="#FFFFFF"
-        strokeWidth="5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
+        stroke="#FFFFFF" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" fill="none"
       />
 
-      {/* Lower Loop of 'B' (Fintech Innovation / Peak Return) with Gold Glow */}
+      {/* Lower loop of B — gold accent */}
       <path
         d="M 17 23 H 29 C 33 23 35.5 25.5 35.5 29.5 C 35.5 33.5 33 37 29 37 H 17"
-        stroke="url(#bb-grad-gold)"
-        strokeWidth="5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-        filter="url(#bb-glow)"
+        stroke="url(#bb-grad-gold)" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"
+        fill="none" filter="url(#bb-glow)"
       />
 
-      {/* Golden Compass Spark / Beacon */}
+      {/* Beacon dot */}
       <circle cx="35" cy="12" r="2.5" fill="#FDE047" />
     </svg>
   );
@@ -86,14 +70,15 @@ export function Logo({
   className = "",
   size = "md",
   showText = true,
+  showTagline = true,
   inverted = false,
   href = "/",
 }: LogoProps) {
-  const iconSize = size === "sm" ? 32 : size === "lg" ? 44 : 38;
-  const textSize = size === "sm" ? "text-[17px]" : size === "lg" ? "text-2xl" : "text-[20px]";
+  const iconSize = size === "sm" ? 30 : size === "lg" ? 44 : 38;
+  const textSize = size === "sm" ? "text-[15px]" : size === "lg" ? "text-2xl" : "text-[20px]";
 
   const content = (
-    <div className={`group inline-flex items-center gap-2.5 select-none ${className}`}>
+    <div className={`group inline-flex items-center gap-2 select-none ${className}`}>
       <LogoIcon size={iconSize} />
       {showText && (
         <div className="flex flex-col leading-none">
@@ -105,13 +90,15 @@ export function Logo({
               BD
             </span>
           </div>
-          <span
-            className={`text-[9.5px] font-bold tracking-widest uppercase mt-0.5 ${
-              inverted ? "text-slate-400" : "text-slate-600"
-            }`}
-          >
-            Smart Banking Guide
-          </span>
+          {showTagline && (
+            <span
+              className={`text-[9px] font-bold tracking-widest uppercase mt-0.5 ${
+                inverted ? "text-slate-400" : "text-slate-500"
+              }`}
+            >
+              Smart Banking Guide
+            </span>
+          )}
         </div>
       )}
     </div>
