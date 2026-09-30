@@ -5,7 +5,7 @@ Built with Next.js 15 (App Router), TypeScript, Tailwind CSS v4 and Prisma.
 
 **Features delivered:**
 - **45 Scheduled Banks Monitored** (Private Commercial, Islamic, State-Owned, Foreign & Specialized)
-- **110+ Credit Cards** with filters for network, tier, reward type (Cashback, Rewards, Miles), max fee, perks & eligibility
+- **148+ Credit Cards** with filters for network, tier, reward type (Cashback, Rewards, Miles), max fee, perks & eligibility
 - **71 Active B1G1 Buffets & Card Deals** (5-star hotels in Dhaka, Chattogram, Sylhet, airline tickets, shopping & healthcare discounts)
 - **Direct Official Bank Redirection** (Instant redirect to actual bank card/loan application portals upon clicking Apply)
 - **Savings Account Comparison** (filter + sort + 3-way side-by-side compare across 65 products)

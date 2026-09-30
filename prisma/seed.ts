@@ -17,6 +17,7 @@ import { DPS_PRODUCTS_DATA } from "./dpsSeed";
 import { ROUTING_NUMBERS_DATA } from "./routingSeed";
 import { NEW_BANKS } from "./newBanks";
 import { NEW_BANK_CREDIT_CARDS } from "./newBankCards";
+import { ULTIMATE_CREDIT_CARDS } from "./ultimateCreditCards";
 
 const prisma = new PrismaClient();
 
@@ -1166,6 +1167,7 @@ async function main() {
     ...EXTENDED_CREDIT_CARDS,
     ...MORE_CREDIT_CARDS,
     ...NEW_BANK_CREDIT_CARDS,
+    ...ULTIMATE_CREDIT_CARDS,
     { bankSlug: "social-islami-bank", cards: SIBL_CREDIT_CARDS },
   ];
 
