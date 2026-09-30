@@ -12,6 +12,7 @@ import { EXTENDED_CREDIT_CARDS } from "./extendedCreditCards";
 import { ADDITIONAL_LOANS, SIBL_CREDIT_CARDS } from "./extendedLoans";
 import { MORE_CREDIT_CARDS } from "./moreCreditCards";
 import { CARD_DEALS_DATA } from "./dealsSeed";
+import { MORE_DEALS } from "./moreDeals";
 import { DPS_PRODUCTS_DATA } from "./dpsSeed";
 import { ROUTING_NUMBERS_DATA } from "./routingSeed";
 
@@ -1258,7 +1259,8 @@ async function main() {
   }
 
   // Seed Credit Card Deals
-  for (const deal of CARD_DEALS_DATA) {
+  const ALL_DEALS = [...CARD_DEALS_DATA, ...MORE_DEALS];
+  for (const deal of ALL_DEALS) {
     await prisma.cardDeal.create({
       data: {
         slug: deal.slug,
