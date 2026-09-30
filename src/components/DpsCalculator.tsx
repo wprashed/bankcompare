@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { ExternalLink } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 import { formatBdt } from "@/lib/format";
 import { DpsRow } from "@/lib/queries";
 import { ApplyModal, ApplyModalProduct } from "@/components/ApplyModal";
+import { getBankApplyUrl } from "@/lib/bankUrls";
 
 interface DpsCalculatorProps {
   dpsProducts: DpsRow[];
@@ -276,21 +278,16 @@ export function DpsCalculator({ dpsProducts }: DpsCalculatorProps) {
               </div>
 
               <div className="mt-5 pt-3 border-t border-slate-100 dark:border-slate-800">
-                <button
-                  onClick={() =>
-                    setApplyProduct({
-                      name: p.name,
-                      nameBn: p.nameBn,
-                      bankName: p.bank.name,
-                      bankSlug: p.bank.slug,
-                      productType: "DPS",
-                      productSlug: p.slug,
-                    })
-                  }
-                  className="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors shadow-sm"
+                <a
+                  href={getBankApplyUrl(p.bank.website, p.bank.slug, "DPS")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors shadow-sm flex items-center justify-center gap-1.5"
+                  title={`${lang === "bn" ? "আবেদন করতে ব্যাংকের ওয়েবসাইটে যান" : "Apply on official bank website"}`}
                 >
-                  {lang === "bn" ? "আবেদন করুন" : "Apply For This DPS"}
-                </button>
+                  <span>{lang === "bn" ? "আবেদন করুন" : "Apply For This DPS"}</span>
+                  <ExternalLink className="h-3.5 w-3.5" />
+                </a>
               </div>
             </div>
           ))}

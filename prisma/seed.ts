@@ -15,6 +15,8 @@ import { CARD_DEALS_DATA } from "./dealsSeed";
 import { MORE_DEALS } from "./moreDeals";
 import { DPS_PRODUCTS_DATA } from "./dpsSeed";
 import { ROUTING_NUMBERS_DATA } from "./routingSeed";
+import { NEW_BANKS } from "./newBanks";
+import { NEW_BANK_CREDIT_CARDS } from "./newBankCards";
 
 const prisma = new PrismaClient();
 
@@ -1071,7 +1073,7 @@ async function main() {
   await prisma.lead.deleteMany();
   await prisma.bank.deleteMany();
 
-  const ALL_BANKS = [...BANKS, ...EXTENDED_BANKS];
+  const ALL_BANKS = [...BANKS, ...EXTENDED_BANKS, ...NEW_BANKS];
 
   for (const b of ALL_BANKS) {
     const bank = await prisma.bank.create({
@@ -1163,6 +1165,7 @@ async function main() {
     ...CREDIT_CARDS_DATA,
     ...EXTENDED_CREDIT_CARDS,
     ...MORE_CREDIT_CARDS,
+    ...NEW_BANK_CREDIT_CARDS,
     { bankSlug: "social-islami-bank", cards: SIBL_CREDIT_CARDS },
   ];
 

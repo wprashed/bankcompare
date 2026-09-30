@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { ChevronRight, Sparkles, Tag, MapPin, Utensils } from "lucide-react";
+import { ChevronRight, Sparkles } from "lucide-react";
 import { getCardDeals } from "@/lib/queries";
 import { DealExplorer } from "@/components/DealExplorer";
 import { Container } from "@/components/ui";
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 
 export default async function DealsPage() {
   const deals = await getCardDeals();
-  const { t, locale } = await getI18n();
+  const { locale } = await getI18n();
   const isBn = locale === "bn";
 
   // Stats

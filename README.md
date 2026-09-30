@@ -4,27 +4,43 @@ Independent financial aggregator and intelligence platform for Bangladeshi banki
 Built with Next.js 15 (App Router), TypeScript, Tailwind CSS v4 and Prisma.
 
 **Features delivered:**
-- **27 Scheduled Banks Monitored** (Commercial, Islamic, Multinational, and Specialized)
-- **Savings Account Comparison** (filter + sort + 3-way side-by-side compare)
-- **FDR Rate Comparison & Calculator** (10%/15% source tax, maturity schedule)
-- **Credit Card Explorer & Comparison** (annual fees, fee waivers, airport lounge access, 0% EMI, rewards, side-by-side card compare matrix)
-- **Buy-1-Get-1 Deals & Luxury Buffets Hub** (Westin, Le Méridien, InterContinental, Radisson, Sheraton, Amari)
-- **Card Matcher Quiz** (find ideal card in 60 seconds based on income and benefits)
+- **45 Scheduled Banks Monitored** (Private Commercial, Islamic, State-Owned, Foreign & Specialized)
+- **110+ Credit Cards** with filters for network, tier, reward type (Cashback, Rewards, Miles), max fee, perks & eligibility
+- **71 Active B1G1 Buffets & Card Deals** (5-star hotels in Dhaka, Chattogram, Sylhet, airline tickets, shopping & healthcare discounts)
+- **Direct Official Bank Redirection** (Instant redirect to actual bank card/loan application portals upon clicking Apply)
+- **Savings Account Comparison** (filter + sort + 3-way side-by-side compare across 65 products)
+- **FDR Rate Comparison & Calculator** (47 FDR products, 196 rate slabs, 10%/15% source tax, maturity schedules)
+- **Retail Loans & Credit Facilities** (Personal, Home & Auto loans across all major banks with live interactive EMI simulator)
 - **DPS Post-Tax Maturity Calculator** (compound interest, NBR source tax & excise duty deductions)
-- **Retail Loans & Credit Facilities** (Personal, Home & Auto loans across all 27 banks with live interactive EMI simulator)
+- **Card Matcher Quiz** (find ideal card in 60 seconds based on income, lifestyle, and perks)
 - **Bangladesh Bank 9-digit Routing Numbers & SWIFT Codes Directory**
-- **Automated Weekly Data Updater** (SMART benchmark drifts, rate change audit logs, Sunday Vercel Cron)
+- **Automated Weekly Data Updater** (`scripts/weekly-updater.ts` + Sunday cron trigger)
 - **Full EN / BN Localisation**, Bengali numerals, BDT lakh/crore formatting
 - **SEO & Structured Data** (JSON-LD ItemLists, WebApplication, breadcrumbs, sitemap)
 
 ---
 
-## Quick start
+## 🚀 Live Deployment & Hosting
+
+### Option 1: Deploy to Vercel (Recommended — Free & 1-Click)
+1. Push your repository to GitHub: `https://github.com/wprashed/bankcompare`
+2. Go to [vercel.com](https://vercel.com) and import the repository.
+3. In Build & Development Settings, set:
+   - Build Command: `npx prisma db push --skip-generate && npm run db:seed && npm run build`
+   - Output Directory: `.next`
+4. Set Environment Variables:
+   - `DATABASE_URL`: `file:./dev.db`
+   - `NEXT_PUBLIC_SITE_URL`: `https://your-domain.vercel.app`
+5. Click **Deploy** — your site will be live on the web!
+
+---
+
+## Quick start (Local Development)
 
 ```bash
 npm install            # install dependencies and run prisma generate
 npm run db:push        # sync SQLite schema (dev.db)
-npm run db:seed        # seed 10 banks · 27 savings · 12 FDR · 62 slabs · 18 credit cards · 18 loans
+npm run db:seed        # seed 45 banks · 65 savings · 47 FDR · 110 credit cards · 71 deals · 53 loans
 npm run dev            # start development server at http://localhost:3000
 ```
 

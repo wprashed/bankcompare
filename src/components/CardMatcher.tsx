@@ -10,11 +10,13 @@ import {
   ShoppingBag,
   CreditCard,
   ShieldCheck,
+  ExternalLink,
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 import { formatBdt } from "@/lib/format";
 import { CreditCardRow } from "@/lib/queries";
 import { ApplyModal, ApplyModalProduct } from "@/components/ApplyModal";
+import { getBankApplyUrl } from "@/lib/bankUrls";
 
 interface CardMatcherProps {
   cards: CreditCardRow[];
@@ -409,21 +411,16 @@ export function CardMatcher({ cards }: CardMatcherProps) {
               </div>
 
               <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800">
-                <button
-                  onClick={() =>
-                    setApplyCard({
-                      name: card.name,
-                      nameBn: card.nameBn,
-                      bankName: card.bank.name,
-                      bankSlug: card.bank.slug,
-                      productType: "CARD",
-                      productSlug: card.slug,
-                    })
-                  }
-                  className="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors shadow-sm"
+                <a
+                  href={getBankApplyUrl(card.bank.website, card.bank.slug, "CARD")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors shadow-sm flex items-center justify-center gap-1.5"
+                  title={`${lang === "bn" ? "আবেদন করতে ব্যাংকের ওয়েবসাইটে যান" : "Apply on official bank website"}`}
                 >
-                  {lang === "bn" ? "আবেদন করুন" : "Apply For This Card"}
-                </button>
+                  <span>{lang === "bn" ? "আবেদন করুন" : "Apply For This Card"}</span>
+                  <ExternalLink className="h-3.5 w-3.5" />
+                </a>
               </div>
             </div>
           ))}

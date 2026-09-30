@@ -13,13 +13,6 @@ import {
   Search,
   X,
   Tag,
-  Filter,
-  ChevronDown,
-  ExternalLink,
-  SlidersHorizontal,
-  Star,
-  Clock,
-  BadgePercent,
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 import { CardDealRow } from "@/lib/queries";
@@ -48,13 +41,6 @@ const CITY_LABELS: Record<string, { en: string; bn: string }> = {
   NATIONWIDE: { en: "Nationwide", bn: "সারাদেশ" },
 };
 
-const BADGE_COLORS: Record<string, string> = {
-  "Buy 1 Get 1": "bg-amber-100 text-amber-800 border-amber-300",
-  "B1G1 Night": "bg-amber-100 text-amber-800 border-amber-300",
-  "B1G1": "bg-amber-100 text-amber-800 border-amber-300",
-  "NATIONWIDE": "bg-violet-100 text-violet-800 border-violet-300",
-};
-
 function getBadgeColor(badge: string | null): string {
   if (!badge) return "bg-slate-100 text-slate-700 border-slate-200";
   if (badge.includes("Buy 1") || badge.includes("B1G1")) return "bg-amber-100 text-amber-800 border-amber-300";
@@ -78,7 +64,6 @@ export function DealExplorer({ initialDeals }: DealExplorerProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
   const [selectedCity, setSelectedCity] = useState<string>("ALL");
   const [search, setSearch] = useState("");
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [expandedDeal, setExpandedDeal] = useState<string | null>(null);
 
   const filteredDeals = useMemo(() => {

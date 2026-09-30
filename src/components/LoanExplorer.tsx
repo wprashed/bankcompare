@@ -18,6 +18,7 @@ import type { LoanRow } from "@/lib/queries";
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
 import { calcEMI, formatBDT, formatBDTCompact, formatNumber, formatPercent } from "@/lib/format";
+import { getBankApplyUrl } from "@/lib/bankUrls";
 
 type Props = {
   rows: LoanRow[];
@@ -387,22 +388,16 @@ export function LoanExplorer({ rows, t, locale, bnNumerals }: Props) {
                 </div>
 
                 <div className="mt-5 border-t border-ink-100 pt-3">
-                  <button
-                    onClick={() =>
-                      setApplyProduct({
-                        name: loan.name,
-                        nameBn: loan.nameBn,
-                        bankName: loan.bank.name,
-                        bankSlug: loan.bank.slug,
-                        productType: "LOAN",
-                        productSlug: loan.slug,
-                      })
-                    }
+                  <a
+                    href={getBankApplyUrl(loan.bank.website, loan.bank.slug, "LOAN")}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors shadow-xs flex items-center justify-center gap-1.5"
+                    title={`${locale === "bn" ? "আবেদন করতে ব্যাংকের ওয়েবসাইটে যান" : "Apply on official website"}`}
                   >
                     {t.common.apply}
                     <ExternalLink className="h-3.5 w-3.5" />
-                  </button>
+                  </a>
                 </div>
               </article>
             );

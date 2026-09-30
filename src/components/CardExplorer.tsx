@@ -25,6 +25,7 @@ import type { CreditCardRow } from "@/lib/queries";
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
 import { formatBDT, formatNumber, formatPercent } from "@/lib/format";
+import { getBankApplyUrl } from "@/lib/bankUrls";
 
 type Props = {
   rows: CreditCardRow[];
@@ -734,22 +735,16 @@ export function CardExplorer({ rows, t, locale, bnNumerals, initial }: Props) {
                       {isCompared ? (locale === "bn" ? "তুলনায় আছে" : "Comparing") : t.common.compare}
                     </button>
 
-                    <button
-                      onClick={() =>
-                        setApplyProduct({
-                          name: card.name,
-                          nameBn: card.nameBn,
-                          bankName: card.bank.name,
-                          bankSlug: card.bank.slug,
-                          productType: "CARD",
-                          productSlug: card.slug,
-                        })
-                      }
+                    <a
+                      href={getBankApplyUrl(card.bank.website, card.bank.slug, "CARD")}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[12px] font-bold px-3 py-1.5 transition-colors shadow-xs"
+                      title={`${locale === "bn" ? "আবেদন করতে ব্যাংকের ওয়েবসাইটে যান" : "Apply on official website"}`}
                     >
                       {t.common.apply}
                       <ExternalLink className="h-3 w-3" />
-                    </button>
+                    </a>
                   </div>
                 </article>
               );

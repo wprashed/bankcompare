@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { ExternalLink } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 import { formatBdt } from "@/lib/format";
+import { getBankApplyUrl } from "@/lib/bankUrls";
 
 export type ApplyModalProduct = {
   name: string;
@@ -11,6 +13,7 @@ export type ApplyModalProduct = {
   bankSlug: string;
   productType: "CARD" | "LOAN" | "DPS" | "FDR";
   productSlug: string;
+  bankWebsite?: string;
 };
 
 interface ApplyModalProps {
@@ -112,17 +115,41 @@ export function ApplyModal({ product, onClose }: ApplyModalProps) {
               <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 inline-block font-mono text-lg font-bold text-emerald-600 dark:text-emerald-400">
                 {successRef}
               </div>
-              <div>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-4">
                 <button
                   onClick={onClose}
-                  className="mt-4 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-xl transition-colors shadow-sm"
+                  className="w-full sm:w-auto px-6 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-sm"
                 >
                   {lang === "bn" ? "ঠিক আছে" : "Close"}
                 </button>
+                <a
+                  href={getBankApplyUrl(product.bankWebsite, product.bankSlug, product.productType)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-xl transition-colors shadow-sm text-sm"
+                >
+                  <span>{lang === "bn" ? "ব্যাংকের ওয়েবসাইটে যান" : "Visit Bank Website"}</span>
+                  <ExternalLink className="h-3.5 w-3.5" />
+                </a>
               </div>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-between gap-3 text-xs">
+                <span className="text-slate-600 dark:text-slate-300">
+                  {lang === "bn" ? "সরাসরি ব্যাংকের অফিসিয়াল পোর্টালে আবেদন করতে চান?" : "Prefer applying directly on official bank portal?"}
+                </span>
+                <a
+                  href={getBankApplyUrl(product.bankWebsite, product.bankSlug, product.productType)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 font-bold text-emerald-600 dark:text-emerald-400 hover:underline shrink-0"
+                >
+                  <span>{lang === "bn" ? "ওয়েবসাইটে যান" : "Go to Bank URL"}</span>
+                  <ExternalLink className="h-3 w-3" />
+                </a>
+              </div>
+
               {error && (
                 <div className="p-3 text-xs bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 rounded-lg border border-rose-200 dark:border-rose-800">
                   {error}
