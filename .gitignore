@@ -31,13 +31,13 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files
-.env*
-!.env.example
+.env.local
+.env.*.local
 
-# sqlite databases
-dev.db
-*.db
+# sqlite temporary journals
 *.db-journal
+*.db-shm
+*.db-wal
 
 # vercel
 .vercel
